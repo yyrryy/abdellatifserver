@@ -6797,6 +6797,7 @@ def minidashboard(request):
 
 def getcommandnumber(request):
     orders=Order.objects.filter(senttoserver=False)
+    length=orders.count()
     if len(orders)==0:
         return JsonResponse({
             'success':False,
@@ -6811,7 +6812,7 @@ def getcommandnumber(request):
             'order_no':order.order_no,
             'isclientcommnd':order.isclientcommnd,
             'note':order.note,
-            'client':order.client.id,
+            'clientcode':order.client.code,
             'salsemanid':order.salseman.id if order.salseman else None,
             'date':order.date,
             'items':[]
@@ -6835,7 +6836,7 @@ def getcommandnumber(request):
     orders.update(senttoserver=True)
     return JsonResponse({
         'success':True,
-        'length':len(orders),
+        'length':length,
         'orders':orderstosend,
         #'items':orderitemsstosend
     })
