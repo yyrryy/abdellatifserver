@@ -760,19 +760,19 @@ def productscategories(request, id):
     result = [nested_products[i:i+2] for i in range(0, len(nested_products), 2)]
     
     group=request.user.groups.first().name
-    if group=='salsemen':
-        if request.user.represent in c.excludedrep.all():
-            products=[]
-        else:
-            if c.affichage=='double':
-                print('>>>>>>>>><<double')
-                products=[products[i:i+8] for i in range(0, len(products), 8)]
-                print('>>>>>>>>><<double', products)
-            else:
-                products=[products[i:i+4] for i in range(0, len(products), 4)]
-    elif group=='clients':
-        if c.masqueclients:
-            products=[]
+    # if group=='salsemen':
+    #     if request.user.represent in c.excludedrep.all():
+    #         products=[]
+    #     else:
+    #         if c.affichage=='double':
+    #             print('>>>>>>>>><<double')
+    #             products=[products[i:i+8] for i in range(0, len(products), 8)]
+    #             print('>>>>>>>>><<double', products)
+    #         else:
+    #             products=[products[i:i+4] for i in range(0, len(products), 4)]
+    # elif group=='clients':
+    #     if c.masqueclients:
+    #         products=[]
     ctx={
             'products':products, 
             'title':'Produits de '+str(c), 
