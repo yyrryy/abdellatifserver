@@ -347,13 +347,13 @@ def home(request):
     }
     # print(request.user)
     # print(request.user.groups.first())
-    # if request.user.groups.first():
-    #     if (request.user.groups.first().name=='salsemen'):
-    #         return redirect(catalog)
-    #     if (request.user.groups.first().name=='accounting'):
-    #         return redirect('main:orders')
-    #     if (request.user.groups.first().name=='admin'):
-    #         return redirect('main:orders')
+    if request.user.groups.first():
+        if (request.user.groups.first().name=='salsemen'):
+            return redirect('main:catalogpage')
+        if (request.user.groups.first().name=='clients'):
+            return redirect('main:clientshome')
+        if (request.user.groups.first().name=='admin'):
+            return redirect('main:orders')
     # return redirect('main:loginpage')
     return render(request, 'login.html', ctx)
 
