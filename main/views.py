@@ -142,8 +142,8 @@ def searchrefphone(request):
                         <strong class="text-blue">{i.ref.upper()}</strong> <br>
                         <strong style="color:red;">{i.refeq1.upper() if i.refeq1 else ''}</strong> <br>
                         <strong style="color:blue;">{i.refeq2.upper() if i.refeq2 else ''}</strong> <br>
-                        <strong style="color:blue;">{i.diametre if i.refeq2 else ''}</strong> <br>
-                        <strong style="color:red; font-size:20px;">{i.refeq3.upper() if i.refeq3 else ''}</strong>
+                        <strong style="color:blue; font-size:20px;">{i.refeq3.upper() if i.refeq3 else ''}</strong>
+                        <strong style="color:red;">{i.diametre if i.diametre else ''}</strong> <br>
                         </div>
                         <div class="suggestions__product-name"> {i.name} </div>
                         <div class="d-flex justify-content-between">
