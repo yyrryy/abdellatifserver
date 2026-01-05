@@ -488,12 +488,12 @@ def commande(request):
         else:
             rep=Represent.objects.get(user_id=request.user.id).id
             order=Order.objects.create(client_id=request.POST.get('client'), salseman_id=rep,  modpymnt='--', modlvrsn='--',total=totalofdispounible, note=notesorder)
-            req.get('http://localserver/commandfromserver', {'items':json.dumps(itemsdisponible), 'clientcode':client.code, 'total':totalofdispounible, 'notesorder':notesorder, 'cmndfromclient':cmndfromclient, 'userid':request.user.id, 'rep':rep})
+            #req.get('http://localserver/commandfromserver', {'items':json.dumps(itemsdisponible), 'clientcode':client.code, 'total':totalofdispounible, 'notesorder':notesorder, 'cmndfromclient':cmndfromclient, 'userid':request.user.id, 'rep':rep})
             if len(itemsnotdisponible)>0:
                 order=Order.objects.create(client_id=request.POST.get('client'), salseman_id=rep,  modpymnt='--', modlvrsn='--',total=totalofnotdispounible, note=notesorder+' Reliquat')
-                req.get('http://localserver/commandfromserver', {'items':json.dumps(itemsnotdisponible), 'clientcode':client.code, 'total':totalofnotdispounible, 'notesorder':notesorder+' Reliquat', 'cmndfromclient':cmndfromclient, 'userid':request.user.id, 'rep':rep})
+                #req.get('http://localserver/commandfromserver', {'items':json.dumps(itemsnotdisponible), 'clientcode':client.code, 'total':totalofnotdispounible, 'notesorder':notesorder+' Reliquat', 'cmndfromclient':cmndfromclient, 'userid':request.user.id, 'rep':rep})
         
-        Ordersnotif.objects.create(user_id=request.user.id)
+        # Ordersnotif.objects.create(user_id=request.user.id)
 
         # totalremise=request.POST.get('totalremise', 0)
         
