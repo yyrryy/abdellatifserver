@@ -999,54 +999,47 @@
               
               return
             }
-            if (confirm('Valider la commande ?')) {
-		$(event.target).addClass('disabled btn-loading')
+		          $(event.target).addClass('disabled btn-loading')
 
-                clientid=$('.clientidholder').attr('clientid')
-                notesorder = localStorage.getItem('notesorder')
-                transport=$('.transportcmnd').val()
-		notesorder=notesorder?notesorder:''
-		notesorder=notesorder+' '+transport
+              clientid=$('.clientidholder').attr('clientid')
+              notesorder = localStorage.getItem('notesorder')
+              transport=$('.transportcmnd').val()
+              notesorder=notesorder?notesorder:''
+              notesorder=notesorder+' '+transport
 
-		$('.loadingscreen').removeClass('d-none').addClass('d-flex');
+              $('.loadingscreen').removeClass('d-none').addClass('d-flex');
                 $('.valider').prop('disabled', false)
                 $('.fromclient').prop('disabled', false)
                 
                 let cmndfromclient=$('.cmndfromclient').val()
                 $.ajax({
-                        url: '/commande',
-                        type: 'POST',
-                        data: {
-                            'csrfmiddlewaretoken': $('[name="csrfmiddlewaretoken"]').val(),
-                            'client':clientid,
-                            'notesorder':notesorder,
-                            'cmndfromclient':$('.cmndfromclient').val(),
-                        },
+                  url: '/commande',
+                  type: 'POST',
+                  data: {
+                      'csrfmiddlewaretoken': $('[name="csrfmiddlewaretoken"]').val(),
+                      'client':clientid,
+                      'notesorder':notesorder,
+                      'cmndfromclient':$('.cmndfromclient').val(),
+                  },
 
-                        success: function(data){
-                            if (data.valid){
-                                localStorage.removeItem('selectedclientid')
-                                localStorage.removeItem('selectedclientname')
-                                $('.loadingscreen').removeClass('d-flex').addClass('d-none');
-                                $('select').val(0)
-                                $('.modes').removeClass('border-danger')
-                                $('.cmndholder').remove()
-                                // clear table
-                                $('.cart-table__body').empty()
-                                //$('.prdctslist').empty()
-                                $('.commanditems').text(0)
-                                $('.valider').prop('disabled', true)
-                                $('.fromclient').prop('disabled', true)
-                                //alertify.success('Commande envoyé')
-                                alertify.confirm('Commande','<img src="https://cdn-icons-png.freepik.com/256/5610/5610944.png?semt=ais_hybrid"/><strong>Commande Confirmé</strong>', function(){ location.reload() }
-                                    , function(){ location.reload() });
-				localStorage.removeItem('notesorder')
-                                $.post('products/notifyadmin', {
-                                    'csrfmiddlewaretoken': $('[name="csrfmiddlewaretoken"]').val()
-                                },
-                                (data)=>{
-                                    console.log('notify admin')
-                                })
+                  success: function(data){
+                      if (data.valid){
+                          localStorage.removeItem('selectedclientid')
+                          localStorage.removeItem('selectedclientname')
+                          $('.loadingscreen').removeClass('d-flex').addClass('d-none');
+                          $('select').val(0)
+                          $('.modes').removeClass('border-danger')
+                          $('.cmndholder').remove()
+                          // clear table
+                          $('.cart-table__body').empty()
+                          //$('.prdctslist').empty()
+                          $('.commanditems').text(0)
+                          $('.valider').prop('disabled', true)
+                          $('.fromclient').prop('disabled', true)
+                          //alertify.success('Commande envoyé')
+                          alertify.confirm('Commande','<img src="https://cdn-icons-png.freepik.com/256/5610/5610944.png?semt=ais_hybrid"/><strong>Commande Confirmé</strong>', function(){ location.reload() }
+                              , function(){ location.reload() });
+                          localStorage.removeItem('notesorder')
                                 // go to thank you 
                                 // if representant
                                 //if (cmndfromclient=='true'){
@@ -1057,10 +1050,10 @@
 
                                 //    window.location.href='/ordersforeach'
                                 //}
-                            }else{
-                                $('.loadingscreen').removeClass('d-flex').addClass('d-none');
+                      }else{
+                        $('.loadingscreen').removeClass('d-flex').addClass('d-none');
 
-                                alertify.error(data.message)
+                        alertify.error(data.message)
 				$(event.target).removeClass('disabled btn-loading')
                             }
                             
@@ -1074,8 +1067,6 @@
                             alertify.alert('ERROR', 'ERROR')
                         }
                     })
-                
-            }
         }
         $('.clientid').on('change', function(){
                 // get the text inside the option selected
