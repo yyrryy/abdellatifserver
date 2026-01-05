@@ -752,6 +752,7 @@ def productscategories(request, id):
     c=Category.objects.get(pk=id)
     
     products=Produit.objects.filter(category_id=id, isactive=True).order_by('code')
+    print('>>>>>>products', products)
     # get group of the request user
     newproducts=Produit.objects.filter(isnew=True)
     nested_products = [[products[i], products[i+1]] for i in range(0, len(products)-1, 2)]
