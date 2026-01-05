@@ -3435,6 +3435,7 @@ def createclientaccount(request):
     print('>>>>>>', clientcode, username, password)
     user=User.objects.filter(username=username).first()
     if user:
+        print('username already', username)
         return JsonResponse({
             'success':False,
             'error':'Username exist déja'
