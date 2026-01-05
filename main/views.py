@@ -593,6 +593,7 @@ def commande(request):
             # # Send message to the group
             # asyncio.run(send_message_to_group(group_chat_id, message_text))
         else:
+            print('create order rep')
             rep=Represent.objects.get(user_id=request.user.id).id
             order=Order.objects.create(client_id=request.POST.get('client'), salseman_id=rep,  modpymnt='--', modlvrsn='--',total=totalofdispounible, note=notesorder, senttoserver=False)
             for i in itemsdisponible:
@@ -621,18 +622,18 @@ def commande(request):
                 #     asyncio.run(send_message_to_group(group_chat_id, message_text))
 
         # Ordersnotif.objects.create(user_id=request.user.id)
-        bot_token='7266453006:AAG-MvJL1LYYH26tK-9TjRVpLMWTsPNhwB0'
-        chat_id='-555555'
-        send_message_url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
-        params = {
-            'chat_id': chat_id,
-            'text': f'client: {client.name}, representant: {client.represent} => {"Non" if cmndfromclient else "Oui"}, total: {order.total}'
-        }
-        response = req.get(send_message_url, params=params)
-        if response.status_code == 200:
-            print('Message sent successfully!')
-        else:
-            print('Failed to send message:', response.text)
+        # bot_token='7266453006:AAG-MvJL1LYYH26tK-9TjRVpLMWTsPNhwB0'
+        # chat_id='-555555'
+        # send_message_url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
+        # params = {
+        #     'chat_id': chat_id,
+        #     'text': f'client: {client.name}, representant: {client.represent} => {"Non" if cmndfromclient else "Oui"}, total: {order.total}'
+        # }
+        # response = req.get(send_message_url, params=params)
+        # if response.status_code == 200:
+        #     print('Message sent successfully!')
+        # else:
+        #     print('Failed to send message:', response.text)
 
         # totalremise=request.POST.get('totalremise', 0)
         
