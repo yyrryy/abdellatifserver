@@ -6889,11 +6889,15 @@ def sendcommandstoserver(request):
 @csrf_exempt
 def updatestockfromthread(request):
     print('>> from thread')
-    uniqcodes=request.POST.get('uniqcodes')# [[uniqcode, stock], .....]
-    for i in uniqcodes:
-        product=Produit.objects.get(uniqcode=i[0])
-        product.stocktotal=i[1]
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'error': 'Invalid JSON'}, status=400)
+
+    # data should be something like:
+    # [[uniqcode, stock], [uniqcode, stock], ...]
+    for uniqcode, stock in data:
+        product = Produit.objects.get(uniqcode=uniqcode)
+        product.stocktotal = stock
         product.save()
-    return JsonResponse({
-        'success':True
-    })
+    return JsonResponse({'success': True})
