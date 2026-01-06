@@ -757,18 +757,30 @@ def productscategories(request, id):
     # get group of the request user
     newproducts=Produit.objects.filter(isnew=True)
     nested_products = [[products[i], products[i+1]] for i in range(0, len(products)-1, 2)]
-    nextctg = Category.objects.filter(code__gt=c.code).order_by('code').first()
 
-    if nextctg is None:
-        # Optional: You can set `nextctg` to some fallback value, like a "No next category" string,
-        # or simply leave it as `None` if you don't want to show anything.
-        nextctg = None  # Or you could set it to a default category, or 'None'
+    # Create a final list by grouping pairs into sublists
+    result = [nested_products[i:i+2] for i in range(0, len(nested_products), 2)]
+    
+    group=request.user.groups.first().name
+    # if group=='salsemen':
+    #     if request.user.represent in c.excludedrep.all():
+    #         products=[]
+    #     else:
+    #         if c.affichage=='double':
+    #             print('>>>>>>>>><<double')
+    #             products=[products[i:i+8] for i in range(0, len(products), 8)]
+    #             print('>>>>>>>>><<double', products)
+    #         else:
+    #             products=[products[i:i+4] for i in range(0, len(products), 4)]
+    # elif group=='clients':
+    #     if c.masqueclients:
+    #         products=[]
     ctx={
             'products':products, 
             'title':'Produits de '+str(c), 
             'category':c,
             'newproducts':newproducts,
-            'nextctg' : nextctg,
+            'nextctg' : Category.objects.filter(code__gt=c.code).order_by('code').first(),
             'previousctg' : Category.objects.filter(code__lt=c.code).order_by('-code').first() 
         }
     return render(request, 'products.html', ctx)
