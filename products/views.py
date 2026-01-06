@@ -6888,6 +6888,7 @@ def sendcommandstoserver(request):
     })
 @csrf_exempt
 def updatestockfromthread(request):
+    print('>> from thread')
     uniqcodes=request.POST.get('uniqcodes')# [[uniqcode, stock], .....]
     for i in uniqcodes:
         product=Produit.objects.get(uniqcode=i[0])
