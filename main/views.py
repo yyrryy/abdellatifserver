@@ -780,7 +780,7 @@ def productscategories(request, id):
             'title':'Produits de '+str(c), 
             'category':c,
             'newproducts':newproducts,
-            'nextctg' : Category.objects.filter(code__gt=c.code).order_by('code').first(),
+            'nextctg' : Category.objects.filter(code__gt=c.code).order_by('code').first() or None,
             'previousctg' : Category.objects.filter(code__lt=c.code).order_by('-code').first() 
         }
     return render(request, 'products.html', ctx)
