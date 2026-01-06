@@ -6893,3 +6893,6 @@ def updatestockfromthread(request):
         product=Produit.objects.get(uniqcode=i[0])
         product.stocktotal=i[1]
         product.save()
+    return JsonResponse({
+        'success':True
+    })
