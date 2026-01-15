@@ -81,18 +81,34 @@ def searchrefphone(request):
                 status="soon"
             if request.user.groups.first().name=='clients':
                 a+=f"""
-                    <div class="suggestions__item suggestions__product border mb-2 productsbrand{i.mark.id if i.mark else ''} productscategorycat{i.category.id if i.category else ''}">
+                    <div class="suggestions__item suggestions__product mb-2 productsbrand{i.mark.id if i.mark else ''} productscategorycat{i.category.id if i.category else ''}">
                     <div class="suggestions__product-image image image--type--product">
                         <div class="image__body">
-                        <a href='/product/{i.id}' terget='_blank'>
-                            <img class="image__tag" src="{i.image.url if i.image else ""}" alt="">
-                        </a>
+                            <a href='/product/{i.id}' terget='_blank'>
+                                <img class="image__tag" src="{i.image.url if i.image else ""}" alt="">
+                            </a>
                         </div>
-                    
+                    </div>
+                    <div class="d-flex flex-column me-2">
+
+                        <div class="suggestions__product-price text-orange"> 
+                            {i.sellprice} {i.remise if i.remise > 0 else ("NET")}% 
+                        </div>
+                        <div>
+                            <img src="{i.mark.image.url if i.mark and i.mark.image else ''}" width=80>
+                        </div>
+                        <div class="d-flex flex-column mt-auto" style="width: 8vw;">
+
+                            <div class="cart-table__quantity input-number">
+                                <input style="height: 2.5em;" class="form-control input-number__input qty" type="number" min="1" value="1">
+                            </div>
+                            <button class="btn btn-success cmnd" pdct="{i.id}" pdctref="{i.ref}" pdctname="{i.name}" pdctpr="{i.sellprice}" pdctid="{i.id}" pdctimg="{ i.image.url if i.image else '' }" pdctremise="{i.remise}" pdctcategory="" onclick="{'whishlist(event)'if i.stocktotal <= 0 else 'cmnd(event)'}">{'Rliquat'if i.stocktotal <= 0 else 'Cmnd'}</button>
+                            <button class="btn btn-info mt-2 d-none anullercmnd" data-id="{i.id}" onclick="anullercmnd(event, '{i.id}')"> Anuller </button>
+                        </div>
                     </div>
                     <div class="suggestions__product-info">
                         <div class="suggestions__product-name">
-                        <strong class="text-blue">{i.ref.upper()}</strong>  <strong style="margin-left:75px;">Résultats de rercherche pour: {ref}</strong><br>
+                        <strong class="text-blue">{i.ref.upper()}</strong>  <br>
                         <strong style="color:red;">{i.refeq1.upper() if i.refeq1 else ''}</strong> <br>
                         <strong style="color:blue;">{i.refeq2.upper() if i.refeq2 else ''}</strong> <br>
                         <strong style="color:blue;">{i.refeq3.upper() if i.refeq3 else ''}</strong>
@@ -107,23 +123,7 @@ def searchrefphone(request):
                         </div>
                     
                     </div>
-                        <div class="d-flex flex-column">
-
-                        <div class="suggestions__product-price text-orange"> 
-                            {i.sellprice} {i.remise if i.remise > 0 else ("NET")}% 
-                        </div>
-                        <div>
-                        <img src="{i.mark.image.url if i.mark and i.mark.image else ''}" width=80>
-                        </div>
-                        <div class="d-flex flex-column mt-auto" style="width: 8vw;">
-
-                            <div class="cart-table__quantity input-number">
-                            <input style="height: 2.5em;" class="form-control input-number__input qty" type="number" min="1" value="1">
-                            </div>
-                            <button class="btn btn-success cmnd" pdct="{i.id}" pdctref="{i.ref}" pdctname="{i.name}" pdctpr="{i.sellprice}" pdctid="{i.id}" pdctimg="{ i.image.url if i.image else '' }" pdctremise="{i.remise}" pdctcategory="" onclick="{'whishlist(event)'if i.stocktotal <= 0 else 'cmnd(event)'}">{'Rliquat'if i.stocktotal <= 0 else 'Cmnd'}</button>
-                            <button class="btn btn-info mt-2 d-none anullercmnd" data-id="{i.id}" onclick="anullercmnd(event, '{i.id}')"> Anuller </button>
-                        </div>
-                        </div>
+                    
                     </div>
                 """
             else:
@@ -136,6 +136,25 @@ def searchrefphone(request):
                         </a>
                         </div>
                     
+                    </div>
+                    <div class="d-flex flex-column">
+
+                        <div class="suggestions__product-price text-orange"> 
+                            {i.sellprice} {i.remise if i.remise > 0 else ("NET")}% 
+                        </div>
+                        <div>
+                            <img src="{i.mark.image.url if i.mark and i.mark.image else ''}" width=80>
+                        </div>
+                        <div class="d-flex flex-column mt-auto" style="width: 8vw;">
+
+                            <div class="cart-table__quantity input-number">
+                                <input style="height: 2.5em;" class="form-control input-number__input qty" type="number" min="1" value="1">
+                            </div>
+                            <button class="btn btn-primary cmnd" pdct="{i.id}" pdctref="{i.ref}" pdctname="{i.name}" pdctpr="{i.sellprice}" pdctid="{i.id}" pdctimg="{ i.image.url if i.image else '/media/default.png' }" pdctremise="{i.remise}" pdctcategory="" onclick="cmnd(event)">
+                            Cmnd
+                            </button>
+                            <button class="btn btn-info mt-2 d-none anullercmnd" data-id="{i.id}" onclick="anullercmnd(event, '{i.id}')"> Anuller </button>
+                        </div>
                     </div>
                     <div class="suggestions__product-info">
                         <div class="suggestions__product-name">
@@ -154,23 +173,7 @@ def searchrefphone(request):
                         </div>
                     
                     </div>
-                        <div class="d-flex flex-column">
-
-                        <div class="suggestions__product-price text-orange"> 
-                            {i.sellprice} {i.remise if i.remise > 0 else ("NET")}% 
-                        </div>
-                        <div>
-                        <img src="{i.mark.image.url if i.mark and i.mark.image else ''}" width=80>
-                        </div>
-                        <div class="d-flex flex-column mt-auto" style="width: 8vw;">
-
-                            <div class="cart-table__quantity input-number">
-                            <input style="height: 2.5em;" class="form-control input-number__input qty" type="number" min="1" value="1">
-                            </div>
-                            <button class="btn btn-primary cmnd" pdct="{i.id}" pdctref="{i.ref}" pdctname="{i.name}" pdctpr="{i.sellprice}" pdctid="{i.id}" pdctimg="{ i.image.url if i.image else '/media/default.png' }" pdctremise="{i.remise}" pdctcategory="" onclick="cmnd(event)">Cmnd</button>
-                            <button class="btn btn-info mt-2 d-none anullercmnd" data-id="{i.id}" onclick="anullercmnd(event, '{i.id}')"> Anuller </button>
-                        </div>
-                        </div>
+                        
                     </div>
                 """
         return JsonResponse({'data':a, 'brands':brands, 'categories':categories, 'apiproducts':apiproducts.content.decode('utf-8') if not '+' in ref else None, "oem":oem})
@@ -214,7 +217,7 @@ def searchrefphone(request):
                     </div>
                     <div class="suggestions__product-info">
                         <div class="suggestions__product-name">
-                        <strong class="text-blue">{i.ref.upper()}</strong>  <strong style="margin-left:75px;">Résultats de rercherche pour: {ref}</strong><br>
+                        <strong class="text-blue">{i.ref.upper()}</strong>  <br>
                         <strong style="color:red;">{i.refeq1.upper() if i.refeq1 else ''}</strong> <br>
                         <strong style="color:blue;">{i.refeq2.upper() if i.refeq2 else ''}</strong> <br>
                         <strong style="color:blue;">{i.refeq3.upper() if i.refeq3 else ''}</strong>
@@ -411,60 +414,33 @@ def loginuser(request):
     password = request.POST.get('password', '')
     if username=='' or password=='':
         return redirect('main:loginpage')
-    print(username, password)
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
     user = authenticate(request, username=username, password=password)
     print('>>>>>>>><', user)
     if user is not None:
         
         if not len(user.groups.all()):
             return redirect('main:login')
+        usersession = UserSession.objects.filter(user=user)
+            # print(usersession, 'salseman session')
+        if len(usersession)>0:
+            # If the user is already authenticated, log them out
+            print('user already post methode using class usersession')
+            return redirect('main:login')
+        else:
+            if user.is_active:
+                UserSession.objects.create(user=user)
+                login(request, user)
+                request.session.set_expiry(30 * 24 * 60 * 60)
+            else:
+                return redirect ('main:login')
         group=user.groups.all().first().name
         print('goutp', group)
         if group == 'salsemen':
-            # uncomment for one time login in ne device ERRREZ
-            # usersession = UserSession.objects.filter(user=user)
-            # # print(usersession, 'salseman session')
-            # if len(usersession)>0:
-            #      # If the user is already authenticated, log them out
-            #      print('user already post methode using class usersession')
-            #      return redirect('main:login')
+            
             # print('check if active')
-            if user.is_active:
-                # ERRREZ
-                #UserSession.objects.create(user=user)
-                print('user is active')
-                login(request, user)
-                request.session.set_expiry(30 * 24 * 60 * 60)
-                # make user always connected finish this
-                return redirect('main:catalogpage')
-            else:
-                print('user is not active')
-                return redirect ('main:login')
+            return redirect('main:catalogpage')
         elif group=='clients':
-            # get session of this user using django's default session management
-            #uncomment for one device ERRREZ
-            # usersession = UserSession.objects.filter(user=user)
-            # print(usersession, 'client session')
-            # if len(usersession)>0:
-            #     # If the user is already authenticated, log them out
-            #     print('user already post methode using class usersession')
-            #     return redirect('main:login')
-            if user.is_active:
-                login(request, user)
-                request.session.set_expiry(30 * 24 * 60 * 60)
-                #onedevice ERRREZ
-                #UserSession.objects.create(user=user)
-                # keep user loged in
-                print('user is active')
-                return redirect('main:clientshome')
-            else:
-                print('user is not active')
-                return redirect ('main:login')
+            return redirect('main:clientshome')
         elif group == 'accounting':
             return redirect('main:orders')
         # elif group == 'admin':
@@ -959,8 +935,11 @@ def aboutus(request):
 
 @user_passes_test(tocatalog, login_url='main:loginpage')
 def cart(request):
+    cart=Cart.objects.get(user_id=request.user.id)
+    items=Cartitems.objects.filter(cart=cart).order_by('-id')
+    print("++ cart==============", items)
     clients=Client.objects.all()
-    return render(request, 'cart.html', {'title':'Panier', 'clients':clients})
+    return render(request, 'cart.html', {'title':'Panier', 'clients':clients, 'items':items})
 
 def developer(request):
     return render(request, 'me.html', {'title':'Develper - abdelwahed ait ali'})
@@ -1120,6 +1099,7 @@ def getitemsincart(request):
         cart=Cart.objects.get(user_id=userid)
         items=Cartitems.objects.filter(cart=cart).order_by('-id')
         length=len(items)
+        print("===>items1111", items)
         for i in items:
             if i.product.stocktotal<=0:
                 status="indisponible"

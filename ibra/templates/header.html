@@ -450,7 +450,7 @@
               </div>
             </div>
           </div>
-          <input class="search__input searchpc searchphone" type="text" placeholder="Numéro d'article, numéro OE, EAN, etc." onchange="searchproductsphone(event)" style="border: 3px solid orange; border-radius:18px;">
+          <input class="search__input searchpc searchphone" type="text" placeholder="Chercher produit" onchange="searchproductsphone(event)" style="border: 3px solid red; border-radius:18px;">
           
           
           <div class="search__box"></div>
@@ -458,24 +458,24 @@
             <div class="search__decor-start"></div>
             <div class="search__decor-end"></div>
           </div>
-          <div class="search__dropdown search__dropdown--suggestions suggestions container" style="top: 55px; width: 75em ;">
+          <div class="search__dropdown search__dropdown--suggestions suggestions container" style="top: 55px; width: 75em ;left: -10em;">
             <div class="d-flex justify-content-between">
               
               <div class="suggestions__group-title brands d-flex" style="width: 92%; overflow-x: scroll;">
               </div>
-              <button class="p-2 text-white searchdropdownremover" style="background: red; width: 8%;" aria-hidden="true">
+              <button class="btn p-2 text-white searchdropdownremover" style="background: red; width: 8%;" aria-hidden="true">
                 &times;
               </button>
             </div>
             <div class="suggestions__group">
               
               <div class="row">
-                <div class="col-2">
+                <!-- <div class="col-2">
                   <div class="categoriesfilter">
 
                   </div>
-                </div>
-                <div class="col-10 suggestions__group-content searchresults" style="height:70vh; overflow-y: scroll;">
+                </div> -->
+                <div class="col-12 suggestions__group-content searchresults" style="height:70vh; overflow-y: scroll;">
                   
                 </div>
               </div>
@@ -589,7 +589,7 @@
       <div class="d-flex flex-column" style="width:12em;">
         <div class="d-flex justify-content-between">
           <div class="indicator">
-            <a href="/cart">
+            <a href="/cart" class="indicator__button shoppingcard">
               <span>
                 <svg width="32" height="32">
                   <circle cx="10.5" cy="27.5" r="2.5"></circle>
@@ -608,10 +608,29 @@
             </a>
             
           </div>
-          <button class="btn text-white" style="background: orange; border-radius:10px;" onclick="validercmdinheader(event)">Valider</button>
+          <div class="indicator">
+        <a href='/replicata' class="indicator__button shoppingcard">
+          <span class="indicator__icon">
+            <svg width="32" height="32">
+              <path d="M23,4c3.9,0,7,3.1,7,7c0,6.3-11.4,15.9-14,16.9C13.4,26.9,2,17.3,2,11c0-3.9,3.1-7,7-7c2.1,0,4.1,1,5.4,2.6l1.6,2l1.6-2
+              C18.9,5,20.9,4,23,4 M23,2c-2.8,0-5.4,1.3-7,3.4C14.4,3.3,11.8,2,9,2c-5,0-9,4-9,9c0,8,14,19,16,19s16-11,16-19C32,6,28,2,23,2L23,2
+              z">
+              </path>
+            </svg>
+            <span class="indicator__counter whishedlist">0</span>
+          </span>
+          <span class="indicator__title">
+              <!--<button class="btn btn-danger">x</button>-->
+          </span>
+
+          <!-- <span class="indicator__value">$250.00</span> -->
+        </a>
+        
+      </div>
+          <button class="btn text-white" style="background: red; border-radius:10px;" onclick="validercmdinheader(event)">Valider</button>
 
         </div>
-	      <input class="form-control transportcmnd" placeholder="Transport" style="border-radius:10px; border-color:orange"/>
+	      <input class="form-control transportcmnd" placeholder="Transport" style="border-radius:10px; border-color:red"/>
 	</div>
   <!-- <div class="indicator indicator--trigger--click">
     <a href="#" class="indicator__button">
@@ -657,26 +676,8 @@
     </div>
   </div> -->
       
-      <div class="indicator">
-        <a href='/replicata' class="indicator__button shoppingcard">
-          <span class="indicator__icon">
-            <svg width="32" height="32">
-              <path d="M23,4c3.9,0,7,3.1,7,7c0,6.3-11.4,15.9-14,16.9C13.4,26.9,2,17.3,2,11c0-3.9,3.1-7,7-7c2.1,0,4.1,1,5.4,2.6l1.6,2l1.6-2
-              C18.9,5,20.9,4,23,4 M23,2c-2.8,0-5.4,1.3-7,3.4C14.4,3.3,11.8,2,9,2c-5,0-9,4-9,9c0,8,14,19,16,19s16-11,16-19C32,6,28,2,23,2L23,2
-              z">
-              </path>
-            </svg>
-            <span class="indicator__counter whishedlist">0</span>
-          </span>
-          <span class="indicator__title">
-              <!--<button class="btn btn-danger">x</button>-->
-          </span>
-
-          <!-- <span class="indicator__value">$250.00</span> -->
-        </a>
-        
-      </div>
-      <div class="indicator">
+      
+      <!-- <div class="indicator">
         <a href='/newarrivage' class="indicator__button">
           <span class="indicator__icon bi bi-bell h3 notificationicon">
             <span class="indicator__counter notificationcount">0</span>
@@ -696,7 +697,7 @@
             
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </header>
@@ -742,19 +743,19 @@
               
               <div class="suggestions__group-title brands d-flex" style="width: 92%; overflow-x: scroll;">
               </div>
-              <button class="p-2 text-white searchdropdownremover" style="background: red; width: 8%;" aria-hidden="true">
+              <button class="btn p-2 text-white searchdropdownremover" style="background: red; width: 8%;" aria-hidden="true">
                 &times;
               </button>
             </div>
             <div class="suggestions__group">
               
               <div class="row">
-                <div class="col-2">
+                <!-- <div class="col-2">
                   <div class="categoriesfilter">
 
                   </div>
-                </div>
-                <div class="col-10 suggestions__group-content searchresults" style="height:70vh; overflow-y: scroll;">
+                </div> -->
+                <div class="col-12 suggestions__group-content searchresults" style="height:70vh; overflow-y: scroll;">
                   
                 </div>
               </div>
