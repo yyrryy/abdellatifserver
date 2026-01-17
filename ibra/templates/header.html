@@ -3,9 +3,33 @@
 {% allcategories as pp %}
 {% firstctg as firstctg %}
 <header class="site__header" data-select2-id="42">
+  <div class="search__dropdown search__dropdown--suggestions suggestions " style="top: 85px; z-index: 99999;border: 6px solid;padding: 15px;">
+            <div class="d-flex justify-content-between">
+              
+              <div class="suggestions__group-title brands d-flex" style="width: 92%; overflow-x: scroll;">
+              </div>
+              <button class="btn p-2 text-white searchdropdownremover" style="background: red; width: 8%;" aria-hidden="true">
+                &times;
+              </button>
+            </div>
+            <div class="suggestions__group">
+              
+              <div class="row">
+                <!-- <div class="col-2">
+                  <div class="categoriesfilter">
+
+                  </div>
+                </div> -->
+                <div class="col-12 suggestions__group-content searchresults" style="height:70vh; overflow-y: scroll;">
+                  
+                </div>
+              </div>
+            </div>
+            
+          </div>
   <input type="hidden" class="clientid" name="clientid" value="{{user.client.id}}">
   <input type="hidden" class="cmndfromclient" name="clientid" value="true">
-  <div class="header" data-select2-id="41">
+  <div class="header d-flex justify-content-between" data-select2-id="41">
   
     <div class="header__logo">
       <a href="/client/clientshome" class="logo">
@@ -18,7 +42,7 @@
       </a>
     </div>
     
-    <div class="header__search" data-select2-id="40">
+    <div class="header__search col-8" data-select2-id="40">
       <div class="search" data-select2-id="39"> 
         <div class="search__body" data-select2-id="38">
           <div class="search__shadow"></div>
@@ -458,30 +482,7 @@
             <div class="search__decor-start"></div>
             <div class="search__decor-end"></div>
           </div>
-          <div class="search__dropdown search__dropdown--suggestions suggestions container" style="top: 55px; width: 75em ;left: -10em;">
-            <div class="d-flex justify-content-between">
-              
-              <div class="suggestions__group-title brands d-flex" style="width: 92%; overflow-x: scroll;">
-              </div>
-              <button class="btn p-2 text-white searchdropdownremover" style="background: red; width: 8%;" aria-hidden="true">
-                &times;
-              </button>
-            </div>
-            <div class="suggestions__group">
-              
-              <div class="row">
-                <!-- <div class="col-2">
-                  <div class="categoriesfilter">
-
-                  </div>
-                </div> -->
-                <div class="col-12 suggestions__group-content searchresults" style="height:70vh; overflow-y: scroll;">
-                  
-                </div>
-              </div>
-            </div>
-            
-          </div>
+          
           <div class="search__dropdown search__dropdown--vehicle-picker vehicle-picker">
             <div class="search__dropdown-arrow"></div>
             <div class="vehicle-picker__panel vehicle-picker__panel--list vehicle-picker__panel--active" data-panel="list">
@@ -586,7 +587,7 @@
     </div>
     <div class="header__indicators">
       
-      <div class="d-flex flex-column" style="width:12em;">
+      <div class="d-flex flex-column">
         <div class="d-flex justify-content-between">
           <div class="indicator">
             <a href="/cart" class="indicator__button shoppingcard">

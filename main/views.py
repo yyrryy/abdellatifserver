@@ -84,7 +84,7 @@ def searchrefphone(request):
                     <div class="suggestions__item suggestions__product mb-2 productsbrand{i.mark.id if i.mark else ''} productscategorycat{i.category.id if i.category else ''}">
                     <div class="suggestions__product-image image image--type--product">
                         <div class="image__body">
-                            <a href='/product/{i.id}' terget='_blank'>
+                            <a href='#' terget='_blank'>
                                 <img class="image__tag" src="{i.image.url if i.image else ""}" alt="">
                             </a>
                         </div>
