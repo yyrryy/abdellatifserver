@@ -131,7 +131,7 @@ def searchrefphone(request):
                     <div class="suggestions__item suggestions__product border mb-2 productsbrand{i.mark.id if i.mark else ''} productscategorycat{i.category.id if i.category else ''}">
                     <div class="suggestions__product-image image image--type--product">
                         <div class="image__body">
-                        <a href='/product/{i.id}' terget='_blank'>
+                        <a href='#' terget='_blank'>
                             <img class="image__tag" src="{i.image.url if i.image else ""}" alt="">
                         </a>
                         </div>
@@ -209,7 +209,7 @@ def searchrefphone(request):
                     <div class="suggestions__item suggestions__product border mb-2 productsbrand{i.mark.id if i.mark else ''} productscategorycat{i.category.id if i.category else ''}">
                     <div class="suggestions__product-image image image--type--product">
                         <div class="image__body">
-                        <a href='/product/{i.id}' terget='_blank'>
+                        <a href='#' terget='_blank'>
                             <img class="image__tag" src="{i.image.url if i.image else ""}" alt="">
                         </a>
                         </div>
@@ -256,7 +256,7 @@ def searchrefphone(request):
                     <div class="suggestions__item suggestions__product border mb-2 productsbrand{i.mark.id if i.mark else ''} productscategorycat{i.category.id if i.category else ''}">
                     <div class="suggestions__product-image image image--type--product">
                         <div class="image__body">
-                        <a href='/product/{i.id}' terget='_blank'>
+                        <a href='#' terget='_blank'>
                             <img class="image__tag" src="{i.image.url if i.image else ""}" alt="">
                         </a>
                         </div>
@@ -935,11 +935,14 @@ def aboutus(request):
 
 @user_passes_test(tocatalog, login_url='main:loginpage')
 def cart(request):
-    cart=Cart.objects.get(user_id=request.user.id)
+    cart=Cart.objects.filter(user_id=request.user.id).first()
     items=Cartitems.objects.filter(cart=cart).order_by('-id')
+    ctx={'title':'Panier'}
+    if cart:
+        ctx['items']=items
     print("++ cart==============", items)
     clients=Client.objects.all()
-    return render(request, 'cart.html', {'title':'Panier', 'clients':clients, 'items':items})
+    return render(request, 'cart.html', ctx)
 
 def developer(request):
     return render(request, 'me.html', {'title':'Develper - abdelwahed ait ali'})

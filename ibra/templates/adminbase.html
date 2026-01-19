@@ -12,7 +12,7 @@
     {% block meta %}
     {% endblock %}
     {% if title %}
-    <title>{{title}} - IBRA</title>
+    <title>{{title}} - BOXER</title>
     {% else %}
     <title>Catalogue</title>
     {% endif %}
@@ -2169,7 +2169,7 @@ a .uil {
       loadingblregl = false;
       currentPagefcregl=1
       loadingfcregl = false;
-      document.title=id+' - IBRA ADMIN'
+      document.title=id+' - BOXER ADMIN'
       if (id != 'recevoir' && !id.includes('modifierlivraison') && !id.includes('add')){
         $('.loadingscreen').toggleClass('d-none')
 
@@ -2276,7 +2276,7 @@ a .uil {
       loadingblregl = false;
       currentPagefcregl=1
       loadingfcregl = false;
-      document.title=id+' - IBRA ADMIN'
+      document.title=id+' - BOXER ADMIN'
       tab=$(`#${id}`)
       tab.find('script').remove()
       tab.html('')
@@ -2315,10 +2315,10 @@ a .uil {
           tab.addClass('active show')
           $('.loadingscreen').toggleClass('d-none')
           updatetab(id, url)
-          document.title=title+' - IBRA ADMIN'
+          document.title=title+' - BOXER ADMIN'
           return
         }
-        document.title=title+' - IBRA ADMIN'
+        document.title=title+' - BOXER ADMIN'
         // Create tab link with close button
         var tabLink = $(`
         <a class="nav-link d-flex justify-content-between p-2" data-toggle="tab" href="#${id}" onclick="updatetab('${id}', '${url}')">

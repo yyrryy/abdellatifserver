@@ -12,6 +12,7 @@
 
 
 {% block content %}
+<div hidden class="clientidholder border rounded p-2" clientid="{{user.client.id}}"></div>
 <div class="">
 
 	<!-- <div class="col-md-4">
@@ -73,14 +74,20 @@
 			
 		</div>
 	</div> -->
-	<div class="owl-carousel mt-3 px-5">
-		{% for i in newproducts %}
-		<img src="{{i.image.url}}" alt="">
-		{% endfor %}
-		
-		
-		
+	<div class="row">
+		<div class="col-md-3">
+			address
+		</div>
+		<div class="col-md-9">
+			
+			<div class="owl-carousel mt-3 px-5">
+				{% for i in newproducts %}
+				<img src="{{i.image.url}}" alt="" height="250">
+				{% endfor %}
+			</div>
+		</div>
 	</div>
+	
 	<div class="block-features block block-features--layout--top-strip">
 		<div class="container">
 
