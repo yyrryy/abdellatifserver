@@ -93,7 +93,11 @@
 			</div>
 			<div class="owl-carousel mt-3 px-5">
 				{% for i in newproducts %}
-				<img src="{{i.image.url}}" alt="" height="250">
+				<div>
+					<img src="{% if i.image %}{{i.image.url}}{%endif%}" alt="" height="250">
+
+					<strong class="border text-primary">{{i.ref}}</strong>
+				</div>
 				{% endfor %}
 			</div>
 		</div>
