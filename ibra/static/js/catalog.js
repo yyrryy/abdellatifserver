@@ -207,7 +207,7 @@ $('.cmnd').each((i, el)=>{
         //$(el).parent().find('.anullercmnd').removeClass('d-none')
         //$(el).attr('disabled', true)
         //$(el).css('background', 'yellowgreen')
-	$(el).hasClass('btn-primary')?$(el).removeClass('btn-primary').addClass('btn-info'):$(el).removeClass('btn-info').addClass('btn-primary')
+	//$(el).hasClass('btn-primary')?$(el).removeClass('btn-primary').addClass('btn-info'):$(el).removeClass('btn-info').addClass('btn-primary')
 	ref=$(el).attr('pdctref')
         name=$(el).attr('pdctname')
         ctg=$(el).attr('pdctcategory')
