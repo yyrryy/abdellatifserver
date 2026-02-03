@@ -199,7 +199,51 @@ h2 {
   opacity: .2; }
 
 </style>
-<div class="content">
+<main>
+    
+<div class="uk-section uk-padding-remove-vertical">
+  <div>
+      <div >
+          <div style="
+              background: url('/media/logos/bg-login.jpg');
+              height: 100vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+          ">
+                <div>
+                      <div class="uk-text-center in-padding-horizontal@s" style="border: 5px solid;padding: 10px;border-radius: 10px;width: 72%;margin: auto; background: white;">
+                          <a class="uk-logo">
+                              <img src="/media/logos/logo2.jpg" data-src="/media/logos/headerlogo.jpg" alt="logo" width="100" data-uk-img="">
+                          </a>
+                          
+                          <!-- login form begin -->
+                          <form class="uk-grid uk-form" action="/loginuser" method="post">
+                            {% csrf_token %}
+                              <div class="uk-margin-small uk-width-1-1 uk-inline">
+                                  <span class="uk-form-icon uk-form-icon-flip fas fa-user fa-sm"></span>
+                                  <input class="uk-input uk-border-rounded" name="username" value="" type="text" placeholder="Username" style="border: 3px solid;font-size: 20px;font-weight: bold">
+                              </div>
+                              <div class="uk-margin-small uk-width-1-1 uk-inline">
+                                  <span class="uk-form-icon uk-form-icon-flip fas fa-lock fa-sm"></span>
+                                  <input class="uk-input uk-border-rounded" name="password" value="" type="password" placeholder="Password" style="border: 3px solid;font-size: 20px;font-weight: bold">
+                              </div>
+                              <div class="uk-margin-small uk-width-1-1">
+                                <button class="uk-button uk-width-1-1 uk-border-rounded uk-float-left" type="submit" name="submit" style="background: black;color: white;">Conncter</button>
+                            </div>
+                          </form>
+                          </div>
+                  </div>
+                  
+              
+          </div>
+          
+      </div>
+  </div>
+</div>
+
+    </main>
+<!-- <div class="content">
     <div class="container">
       <div class="row">
         <div class="col-md-6 order-md-2">
@@ -245,25 +289,16 @@ h2 {
         
       </div>
     </div>
-  </div>
+  </div> -->
 <!--  -->
 {% endblock %}
 {% block js %}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
+
 <script>
   $.post('/login', {username: $('[name="username"]').val(), password: $('[name="password"]').val(), csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()}, function(data, status) {
     console.log(data);
   });
-// Use fingerprintjs2 in your JavaScript code
-  new Fingerprint2().get(function(result, components) {
-    // Send the fingerprint to the server using an HTTP request (e.g., AJAX)
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/save_fingerprint/", true);
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-    // Send the fingerprint data as JSON
-    xhr.send(JSON.stringify({ fingerprint: result }));
-  });
 </script>
 {% endblock %}
