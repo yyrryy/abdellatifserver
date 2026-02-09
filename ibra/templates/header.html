@@ -3,6 +3,10 @@
 {% allcategories as pp %}
 {% firstctg as firstctg %}
 <header class="site__header" data-select2-id="42">
+  <div hidden class="clientidholder border rounded p-2" clientid="{{user.client.id}}">
+  </div>
+  
+  <input type="hidden" class="cmndfromclient" name="clientid" value="true">
   <div class="search__dropdown search__dropdown--suggestions suggestions " style="top: 85px; z-index: 99999;border: 6px solid;padding: 15px;">
             <div class="d-flex justify-content-between">
               
