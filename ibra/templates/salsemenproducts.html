@@ -85,7 +85,7 @@
                 <div>
                   <div class="cart-table__quantity input-number" style="width: 8vw;"><input style="height: 2.5em;" class="form-control input-number__input qty border-0" type="number" min="1" value="1"><div class="input-number__add" style="width:60px;"></div><div class="input-number__sub" style="width:60px;"></div></div>
                 </div>
-                <button class="btn btn-primary cmnd" pdct="{{i.id}}" pdctref="{{i.ref}}" pdctname="{{i.name}}" pdctpr="{{i.sellprice}}" pdctid="{{i.id}}" pdctimg="{% if i.image %} {{i.image.url}} {% endif %}" pdctremise="{{i.remise|floatformat:-2}}" pdctcategory="{{i.category.title}}">Cmnd</button>
+                <button class="btn cmnd" pdct="{{i.id}}" pdctref="{{i.ref}}" pdctname="{{i.name}}" pdctpr="{{i.sellprice}}" pdctid="{{i.id}}" pdctimg="{% if i.image %} {{i.image.url}} {% endif %}" pdctremise="{{i.remise|floatformat:-2}}" pdctcategory="{{i.category.title}}">Cmnd</button>
         
                 <button class="btn btn-info mt-2 d-none anullercmnd" data-id="{{i.id}}" onclick="anullercmnd(event, '{{i.id}}')">
                   Anuller

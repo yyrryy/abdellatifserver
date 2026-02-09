@@ -202,13 +202,7 @@ const clearcommande=()=>{
 
 $('.cmnd').each((i, el)=>{
     $(el).on('click', ()=>{
-        // id=$(el).attr('pdct');
-        //$(el).addClass('d-none')
-        //$(el).parent().find('.anullercmnd').removeClass('d-none')
-        //$(el).attr('disabled', true)
-        //$(el).css('background', 'yellowgreen')
-	//$(el).hasClass('btn-primary')?$(el).removeClass('btn-primary').addClass('btn-info'):$(el).removeClass('btn-info').addClass('btn-primary')
-	ref=$(el).attr('pdctref')
+        ref=$(el).attr('pdctref')
         name=$(el).attr('pdctname')
         ctg=$(el).attr('pdctcategory')
         pr=$(el).attr('pdctpr')
