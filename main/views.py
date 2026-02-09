@@ -493,128 +493,63 @@ def commande(request):
         totalofdispounible=0
         totalofnotdispounible=0
         for i in cartitems:
-            if request.user.groups.first().name=='clients':
-                if i.product.stocktotal>0:
-                    totalofdispounible+=round(i.product.sellprice * i.qty, 2)
-                    item={
-                        'ref':i.product.ref,
-                        'name':i.product.name,
-                        'qty':i.qty,
-                        'price':i.product.sellprice,
-                        'total':round(i.product.sellprice * i.qty, 2),
-                        'remise':i.product.remise,
-                        'productid':i.product.id,
-                        'uniqcode':i.product.uniqcode
-                    }
-                    itemsdisponible.append(item)
-                    i.delete()
-                # else:
-                #     totalofnotdispounible+=i.total
-                cart.total=totalofnotdispounible
-                cart.save()
-                
+            if i.product.stocktotal>0:
+                totalofdispounible+=round(i.product.sellprice * i.qty, 2)
+                item={
+                    'ref':i.product.ref,
+                    'name':i.product.name,
+                    'qty':i.qty,
+                    'price':i.product.sellprice,
+                    'total':round(i.product.sellprice * i.qty, 2),
+                    'remise':i.product.remise,
+                    'productid':i.product.id,
+                    'uniqcode':i.product.uniqcode
+                }
+                itemsdisponible.append(item)
+                i.delete()
             else:
-                if i.product.stocktotal>0:
-                    totalofdispounible+=round(i.product.sellprice * i.qty, 2)
-                    item={
-                        'ref':i.product.ref,
-                        'name':i.product.name,
-                        'qty':i.qty,
-                        'price':i.product.sellprice,
-                        'total':round(i.product.sellprice * i.qty, 2),
-                        'remise':i.product.remise,
-                        'productid':i.product.id,
-                        'uniqcode':i.product.uniqcode
-                    }
-                    itemsdisponible.append(item)
-                    i.delete()
-                else:
-                    totalofnotdispounible+=round(i.product.sellprice * i.qty, 2)
-                    item={
-                        'ref':i.product.ref,
-                        'name':i.product.name,
-                        'qty':i.qty,
-                        'price':i.product.sellprice,
-                        'total':round(i.product.sellprice * i.qty, 2),
-                        'remise':i.product.remise,
-                        'uniqcode':i.product.uniqcode,
-                        'productid':i.product.id,
-                    }
-                    itemsnotdisponible.append(item)
-                    i.delete()
-                cart.total=0
-                cart.save()
-        if request.user.groups.first().name=='clients' and totalofdispounible == 0:
-            return JsonResponse({
-                'valid':False,
-                'message': 'Stock null panier'
-            })
+                totalofnotdispounible+=round(i.product.sellprice * i.qty, 2)
+                item={
+                    'ref':i.product.ref,
+                    'name':i.product.name,
+                    'qty':i.qty,
+                    'price':i.product.sellprice,
+                    'total':round(i.product.sellprice * i.qty, 2),
+                    'remise':i.product.remise,
+                    'uniqcode':i.product.uniqcode,
+                    'productid':i.product.id,
+                }
+                itemsnotdisponible.append(item)
+                i.delete()
+            cart.total=0
+            cart.save()
+                
+        # if request.user.groups.first().name=='clients' and totalofdispounible == 0:
+        #     return JsonResponse({
+        #         'valid':False,
+        #         'message': 'Stock null panier'
+        #     })
         notesorder=request.POST.get('notesorder')
         cmndfromclient=request.POST.get('cmndfromclient')
         if cmndfromclient == 'true':
-            order=Order.objects.create(client=client, salseman=client.represent,  modpymnt='--', modlvrsn='--',total=totalofdispounible, isclientcommnd=True, note=notesorder, senttoserver=False)
+            order=Order.objects.create(client=client, salseman=client.represent,  modpymnt='--', modlvrsn='--', total=totalofdispounible, isclientcommnd=True, note=notesorder, senttoserver=False)
             for i in itemsdisponible:
                 Orderitem.objects.create(order=order, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
-            # try:
-            #     req.get('http://localserver/commandfromserver', {'items':json.dumps(itemsdisponible), 'clientcode':client.code, 'total':totalofdispounible, 'notesorder':notesorder, 'cmndfromclient':cmndfromclient, 'userid':request.user.id})
-            # except:
-            #     order.senttoserver=False
-            #     order.save()
-            # async def send_message_to_group(group_chat_id, message_text):
-            #     await bot.send_message(chat_id=group_chat_id, text=message_text)
-            # # Initialize the bot
-            # bot = telegram.Bot(token=TOKEN)
-            # message_text = 'Nouveau commande server'
-
-            # # Send message to the group
-            # asyncio.run(send_message_to_group(group_chat_id, message_text))
+            if len(itemsnotdisponible)>0:
+                reliquatorder=Order.objects.create(client=client, salseman=client.represent,  modpymnt='--', modlvrsn='--', total=totalofnotdispounible, isclientcommnd=True, note=notesorder+' Reliquat', senttoserver=False)
+                for i in itemsnotdisponible:
+                    Orderitem.objects.create(order=reliquatorder, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
         else:
             print('create order rep')
             rep=Represent.objects.get(user_id=request.user.id).id
             order=Order.objects.create(client_id=request.POST.get('client'), salseman_id=rep,  modpymnt='--', modlvrsn='--',total=totalofdispounible, note=notesorder, senttoserver=False)
             for i in itemsdisponible:
                 Orderitem.objects.create(order=order, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
-            # try:
-            #     req.get('http://localserver/commandfromserver', {'items':json.dumps(itemsdisponible), 'clientcode':client.code, 'total':totalofdispounible, 'notesorder':notesorder, 'cmndfromclient':cmndfromclient, 'userid':request.user.id, 'rep':rep})
-            # except:
-            #     order.senttoserver=False
-            #     order.save()
             if len(itemsnotdisponible)>0:
                 reliquatorder=Order.objects.create(client_id=request.POST.get('client'), salseman_id=rep,  modpymnt='--', modlvrsn='--',total=totalofnotdispounible, note=notesorder+' Reliquat', senttoserver=False)
                 for i in itemsnotdisponible:
                     Orderitem.objects.create(order=reliquatorder, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
-                # try:
-                #     req.get('http://localserver/commandfromserver', {'items':json.dumps(itemsnotdisponible), 'clientcode':client.code, 'total':totalofnotdispounible, 'notesorder':notesorder+' Reliquat', 'cmndfromclient':cmndfromclient, 'userid':request.user.id, 'rep':rep})
-                # except:
-                #     order.senttoserver=False
-                #     order.save()
-                #     async def send_message_to_group(group_chat_id, message_text):
-                #         await bot.send_message(chat_id=group_chat_id, text=message_text)
-                #     # Initialize the bot
-                #     bot = telegram.Bot(token=TOKEN)
-                #     message_text = 'Nouveau commande server'
-    
-                #     # Send message to the group
-                #     asyncio.run(send_message_to_group(group_chat_id, message_text))
-
-        # Ordersnotif.objects.create(user_id=request.user.id)
-        # bot_token='7266453006:AAG-MvJL1LYYH26tK-9TjRVpLMWTsPNhwB0'
-        # chat_id='-555555'
-        # send_message_url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
-        # params = {
-        #     'chat_id': chat_id,
-        #     'text': f'client: {client.name}, representant: {client.represent} => {"Non" if cmndfromclient else "Oui"}, total: {order.total}'
-        # }
-        # response = req.get(send_message_url, params=params)
-        # if response.status_code == 200:
-        #     print('Message sent successfully!')
-        # else:
-        #     print('Failed to send message:', response.text)
-
-        # totalremise=request.POST.get('totalremise', 0)
-        
-    # send_mail(message='Nouveau commande.', subject=f'Nouveau commande. #{order.id}')
-    #threading.Thread(target=send_mail, args=('Nouveau commande.', f'Nouveau commande. #{order.id}', 'abdelwahedaitali@gmail.com', ['aitaliabdelwahed@gmail.com'], False)).start()
+                
         return JsonResponse({
             'valid':True,
             'message':'Commande enregistrée avec succès',
