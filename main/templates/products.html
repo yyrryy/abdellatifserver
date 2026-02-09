@@ -57,26 +57,33 @@
 	</div>
 </div>
 
-<div class="row">
-  <div style="position: fixed; height: 100%; right: 0;" class="col-1 rounded p-2 categorytitle  border border-2 bg-white">
-    <!-- <div class="d-flex justify-content-between align-items-center">
-      <a href="/catalog" class="bi bi-arrow-left me-2 btn text-primary">Catalog</a>
+<div class="row px-3">
+  <div style="position: fixed; width: 100%; right: 0; bottom: 0;" class="col-1 rounded p-2 categorytitle  border border-2 bg-white">
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- <a href="/catalogpage" class="bi bi-arrow-left me-2 btn text-primary">Catalog</a>
       <div>
         {{category.title.upper}}
+      </div> -->
+      <div class="layout-switcher__list  bg-white d-flex ">
+        <!-- <input type="text" placeholder="Chercher dans {{category|upper}}" aria-describedby="button-addon1" class="form-control border bg-light" id="searchbox">
+        <a href="/catalog" class="btn border me-2">
+          ←
+        </a> -->
+        <button onclick="$('.products-view__list').attr('data-layout', 'list'), $('.products-list__content').removeClass('d-flex flex-wrap'), $('.product-card__footer').remove('d-block')" type="button" class="layoutbtn btn border me-2 bi bi-list"></button>
+        <button onclick="$('.products-view__list').attr('data-layout', 'grid'), $('.products-list__content').addClass('d-flex flex-wrap'), $('.product-card__footer').addClass('d-block')" type="button" class="layoutbtn btn border me-2 bi bi-grid"></button>
       </div>
 
-
       
       
-    </div> -->
-    <input type="text" placeholder="Chercher dans {{category|upper}}" aria-describedby="button-addon1" class="form-control border bg-light" id="searchbox">
-    <div class="layout-switcher__list  bg-white d-flex flex-column">
+    </div>
+    
+    <!-- <div class="layout-switcher__list  bg-white d-flex flex-column">
       <a href="/catalog" class="btn border me-2">
         ←
       </a>
       <button onclick="$('.products-view__list').attr('data-layout', 'list'), $('.products-list__content').removeClass('d-flex flex-wrap'), $('.product-card__footer').remove('d-block')" type="button" class="layoutbtn btn border me-2 bi bi-list"></button>
       <button onclick="$('.products-view__list').attr('data-layout', 'grid'), $('.products-list__content').addClass('d-flex flex-wrap'), $('.product-card__footer').addClass('d-block')" type="button" class="layoutbtn btn border me-2 bi bi-grid"></button>
-    </div>
+    </div> -->
       <div class="d-flex justify-content-between align-items-center">
           
           <div class="d-flex col-8">
@@ -108,7 +115,7 @@
       {% endif %}
   </div>
   
-  <div class="col-11">
+  <div class="">
     
     <!-- products holder -->
     <div class="block-split__item block-split__item-content col-auto mt-3">
@@ -168,7 +175,7 @@
                           {%if i.refeq3%}<strong class="badge bg-primary me-3 text-start" style="font-size: 19px;">{{i.refeq3}}</strong>{%endif%}
                         </div>
                         <div>
-                          <strong style="font-size: 19px;">{{i.name.upper}}</strong> <br>{%if i.diametre%}<span class="text-danger">{{i.diametre}}</span>{%endif%}
+                          <strong>{{i.name.upper}}</strong> <br>{%if i.diametre%}<span class="text-danger">{{i.diametre}}</span>{%endif%}
                         </div>
                       </div>
                     </div>
@@ -213,10 +220,10 @@
                       <div class="input-number__add"></div>
                       <div class="input-number__sub"></div>
                     </div> 
-                    {%if i.stocktotal <= 0%}
+                    <!-- {%if i.stocktotal <= 0%}
                     <button class="btn btn-success w-100" pdct="{{i.id}}" pdctref="{{i.ref}}" pdctname="{{i.name}}" pdctpr="{{i.sellprice}}" pdctid="{{i.id}}" pdctimg="{%if i.image%} {{i.image.url}}  {%endif%}" pdctremise="{{i.remise}}" pdctcategory="{{i.category.title}}" onclick="whishlist(event)">Reliquat</button>
-                    {%else%}
-                    <button class="btn btn-success cmnd w-100" pdct="{{i.id}}" pdctref="{{i.ref}}" pdctname="{{i.name}}" pdctpr="{{i.sellprice}}" pdctid="{{i.id}}" pdctimg="{% if i.image %} {{i.image.url}} {% endif %}" pdctremise="{{i.remise|floatformat:-2}}" pdctcategory="{{i.category.title}}">Cmnd</button>
+                    {%else%} -->
+                    <button class="btn btn-success cmnd w-100" pdct="{{i.id}}" pdctref="{{i.ref}}" pdctname="{{i.name}}" pdctpr="{{i.sellprice}}" pdctid="{{i.id}}" pdctimg="{% if i.image %} {{i.image.url}} {% endif %}" pdctremise="{{i.remise|floatformat:-2}}" pdctcategory="{{i.category.title}}">{%if i.stocktotal <= 0%}Reliquat{%else%}COMMANDE{%endif%}</button>
                     {%endif%}
                     <button class="btn btn-info mt-2 d-none anullercmnd w-100" data-id="{{i.id}}" onclick="anullercmnd(event, '{{i.id}}')">
                       Anuller
