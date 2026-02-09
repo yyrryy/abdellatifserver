@@ -207,7 +207,9 @@ $('.cmnd').each((i, el)=>{
         //$(el).parent().find('.anullercmnd').removeClass('d-none')
         //$(el).attr('disabled', true)
         //$(el).css('background', 'yellowgreen')
-        $(el).prepend('<div class="bi bi-check"></div>')
+        if ($(el).find('div.bi.bi-check').length === 0) {
+            $(el).prepend('<div class="bi bi-check"></div>');
+        }
 	//$(el).hasClass('btn-primary')?$(el).removeClass('btn-primary').addClass('btn-info'):$(el).removeClass('btn-info').addClass('btn-primary')
 	ref=$(el).attr('pdctref')
         name=$(el).attr('pdctname')

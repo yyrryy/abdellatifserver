@@ -630,10 +630,10 @@
         </a>
         
       </div> -->
-          <button class="btn text-white" style="background: red; border-radius:10px;" onclick="validercmdinheader(event)">Valider</button>
+          <button class="btn text-white" style="background: black; border-radius:10px;" onclick="validercmdinheader(event)">Valider</button>
 
         </div>
-	      <input class="form-control transportcmnd" placeholder="Transport" style="border-radius:10px; border-color:red"/>
+	      <input class="form-control transportcmnd" placeholder="Transport" style="border-radius:10px;"/>
 	</div>
   <!-- <div class="indicator indicator--trigger--click">
     <a href="#" class="indicator__button">
@@ -704,6 +704,7 @@
     </div>
   </div>
 </header>
+<!-- header of representant -->
 {%else%}
 <header class="site__header repheader">
   <div class="header p-2">
@@ -827,7 +828,10 @@
         </div>
       </div> -->
 
-
+      <div class="d-flex flex-column p-2 w-100">
+        <input class="form-control transportcmnd" placeholder="La note" />
+        <button class="btn text-white" style="background: black;" onclick="validercmdinheader(event)">Valider</button>
+      </div>
       <div class="indicator indicator--trigger--click">
         <a href="{% url 'main:cart' %}">
           <div class="input-group">
