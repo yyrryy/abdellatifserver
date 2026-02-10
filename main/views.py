@@ -1344,6 +1344,12 @@ def getproducdataforsuppliers(request):
     return JsonResponse({
         'html':html
     })
-
-
+def makecommandnotsent(request):
+    orderid=request.GET.get('orderid')
+    order=Order.objects.get(pk=orderid)
+    order.senttoserver=False
+    order.save()
+    return JsonResponse({
+        'success':True
+    })
         
