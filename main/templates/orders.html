@@ -111,8 +111,8 @@
 
     function makecommandnotsent(orderid){
       $.get('/makecommandnotsent', {'orderid':orderid}, (data)=>{
-        if(data.status=='success'){
-          alertify.success('Commande marquée comme livrée')
+        if(data.success){
+          alertify.success('Commande Envoyé avec succès');
           //location.reload()
         }
       })
