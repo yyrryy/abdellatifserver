@@ -815,7 +815,7 @@ def ordersforeach(request):
 @user_passes_test(bothsalseaccount, login_url='main:loginpage')
 @login_required(login_url='main:loginpage')
 def salsemanorders(request, str_id):
-    orders=Order.objects.get(code=str_id)
+    orders=Order.objects.get(pk=str_id)
     items=Orderitem.objects.filter(order=orders.id)
     return render(request, 'salsemanorders.html', {'order':orders, 'items':items, 'title':'Commande #'+str(orders.id)})
 
