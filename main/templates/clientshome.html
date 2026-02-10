@@ -88,16 +88,29 @@
 			</div> -->
 		</div>
 		<div class="col-7 border d-flex">
-			<div class="p-2 text-center" style="writing-mode: vertical-lr;
+			<!-- <div class="p-2 text-center" style="writing-mode: vertical-lr;
 				width: 3em;color: white; background: black;">
 				NOUVEAU ARRIVAGE
-			</div>
+			</div> -->
 			<div class="owl-carousel mt-3">
-				{% for i in newproducts %}
-				<div>
-					<img src="{% if i.image %}{{i.image.url}}{%endif%}" alt="" height="250">
-
-					<strong class="border text-primary">{{i.ref}}</strong>
+				{% for i in categories %}
+				<div  class="p-2 d-flex justify-content-between align-items-center" style="border:1px solid; border-radius: 10px;">
+					<a href="/categories/products/{{i.id}}">
+						{% if i.image %}
+						<img class="image__tag" src="{{i.image.url}}" alt="" style="width: 100%;">
+						{% else %}
+						<img class="image__tag" src="" alt="">
+						{% endif %}
+						<div class="text-center">
+							<b class="categoryname">
+								{{i.name.upper}}
+							</b> <br>
+							<small>{{i.total_products}} PRODUITS</small>
+						</div>
+	
+					</a>
+					<!-- <a href="categories/products/{{i.id}}" class="text-end">
+					</a> -->
 				</div>
 				{% endfor %}
 			</div>
