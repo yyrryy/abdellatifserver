@@ -3506,7 +3506,7 @@ def carlogospage(request):
         'title':'Voitures logo'
     }
     return render(request, 'carlogos.html', ctx)
-
+@csrf_exempt
 def createlogo(request):
     name=request.POST.get('name')
     # get image file
