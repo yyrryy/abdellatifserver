@@ -910,9 +910,9 @@
             console.log(data)
             $('.whishedlist').text(data.length)
         })
-        $.get('/switchtocart', (data)=>{
-            console.log(data)
-        })
+        //$.get('/switchtocart', (data)=>{
+        //    console.log(data)
+        //})
 
         $.get('/notifications', (data)=>{
           console.log(data)
@@ -1299,15 +1299,15 @@
                     $('.searchref').focus()
                     $('.searchresults').html(data.data)
                       $('.searchresults').append(data.apiproducts)
-			$('.brands').html('')
+			            $('.brands').html('')
                       $('.categoriesfilter').html('')
-                    for (i of data.brands){
-                      $('.brands').append(`
-                        <img class="tag-badge tag-badge--hot" id='${i.id}' onclick="filtersearch(event)" src='${i.image}' style="width:14em;height:4em; cursor:pointer;">
-                      `)
-                    }
+                    // for (i of data.brands){
+                    //   $('.brands').append(`
+                    //     <img class="tag-badge tag-badge--hot" id='${i.id}' onclick="filtersearch(event)" src='${i.image}' style="width:14em;height:4em; cursor:pointer;">
+                    //   `)
+                    // }
                     for (i of data.categories){
-                      $('.categoriesfilter').append(`
+                      $('.brands').append(`
                         <div class="mb-2 tag-badge tag-badge--hot" id='cat${i.id}' onclick="filtercategories(event)" style="font-size:15px; cursor:pointer;">${i.name}</div>
                       `)
                     }
