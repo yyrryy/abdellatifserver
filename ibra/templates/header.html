@@ -7,7 +7,7 @@
   </div>
   
   <input type="hidden" class="cmndfromclient" name="clientid" value="true">
-  <div class="search__dropdown search__dropdown--suggestions suggestions " style="top: 85px; z-index: 99999;border: 6px solid;padding: 15px;">
+  <div class="search__dropdown search__dropdown--suggestions suggestions " style="top: 100px; z-index: 99999;border: 6px solid;padding: 15px;">
             <div class="d-flex justify-content-between">
               
               <div class="suggestions__group-title brands d-flex" style="width: 92%; overflow-x: scroll;">
@@ -594,8 +594,9 @@
     </div>
     <div class="header__indicators">
       
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column me-3">
         <div class="d-flex justify-content-between">
+          <button class="btn text-white" style="background: black; border-radius:10px;" onclick="validercmdinheader(event)">Valider</button>
           <div class="indicator">
             <a href="/cart" class="indicator__button shoppingcard">
               <span>
@@ -633,7 +634,7 @@
         </a>
         
       </div> -->
-          <button class="btn text-white" style="background: black; border-radius:10px;" onclick="validercmdinheader(event)">Valider</button>
+          
 
         </div>
 	      <input class="form-control transportcmnd" placeholder="Transport" style="border-radius:10px;"/>
