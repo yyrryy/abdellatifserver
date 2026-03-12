@@ -1308,7 +1308,7 @@
                     // }
                     for (i of data.categories){
                       $('.brands').append(`
-                        <div class="mb-2 bg-danger text-black p-2" id='cat${i.id}' onclick="filtercategories(event)" style="font-size:15px; cursor:pointer; border-radius:15px">${i.name}</div>
+                        <div class="mb-2 text-black p-2 me-2" id='cat${i.id}' onclick="filtercategories(event)" style="font-size:15px; cursor:pointer; border-radius:15px; background: red;">${i.name}</div>
                       `)
                     }
                     $.get('/makeuserconnected', {'activity':'recherche '+ref}, (data)=>{
