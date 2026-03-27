@@ -17,7 +17,7 @@ from .models import UserSession
 import telegram
 import asyncio
 import requests as req
-from itertools import islice
+
 
 TOKEN = '6716455240:AAFgHhoQLrmCU8Elc_A_DQFLrwCJtsHk3P8'
 user_chat_ids = ['USER_CHAT_ID_1', 'USER_CHAT_ID_2', 'USER_CHAT_ID_3']
@@ -305,16 +305,13 @@ def searchrefphone(request):
 @user_passes_test(tocatalog, login_url='main:loginpage')
 @login_required(login_url='main:loginpage')
 
-def chunked(iterable, size):
-    it = iter(iterable)
-    return iter(lambda: list(islice(it, size)), [])
+
 
 def clientshome(request):
     request.session.set_expiry(90 * 24 * 60 * 60)
 
     newproducts = Produit.objects.filter(isnew=True).order_by('category')
-    grouped_products = list(chunked(newproducts, 4))
-
+    grouped_products=[newproducts[i:i+4] for i in range(0, len(newproducts), 4)]
     ctx = {
         'grouped_products': grouped_products,
         'categories': Category.objects.all().order_by('code'),
