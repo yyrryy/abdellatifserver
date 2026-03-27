@@ -279,22 +279,47 @@
 		</div>
 	  </div>
 	   -->
-	<div class="mt-3 text-center" style="background: #e6e6e6;">
+	<div class="mt-3 px-2 row border">
 
-		<div class="col-6 d-flex text-center p-5">
-			<button class="btn btn-success" onclick="searchrepexpert()">
-				REPEXPERT
-			</button> 
-			<input type="text" class="repinput form-control" placeholder="Chercher REPEXPERT">
+		<div class="col-4 d-flex m-auto">
+			<div class="d-flex">
+
+				<button class="btn btn-success btn-sm" onclick="searchrepexpert()">
+					REPEXPERT
+				</button> 
+				<input type="text" class="repinput form-control" placeholder="Chercher REPEXPERT">
+			</div>
+		</div>
+		<div class="col-8">
+			{% for i in categories %}
+				<div  class="col-3 p-2 d-flex justify-content-between align-items-center" style="border:1px solid; border-radius: 10px;">
+					<a href="/categories/products/{{i.id}}">
+						{% if i.image %}
+						<img class="image__tag" src="{{i.image.url}}" alt="" style="width: 100%;">
+						{% else %}
+						<img class="image__tag" src="" alt="">
+						{% endif %}
+						<div class="text-center">
+							<b class="categoryname">
+								{{i.name.upper}}
+							</b> <br>
+							<small>{{i.total_products}} PRODUITS</small>
+						</div>
+	
+					</a>
+					<!-- <a href="categories/products/{{i.id}}" class="text-end">
+					</a> -->
+				</div>
+				{% endfor %}
 		</div>
 	</div>
-	<div class="p-2 bg-dark mt-3 justify-content-between align-items-center d-flex" style="border-radius: 10px;">
+	<div class="p-2 bg-dark mt-3 justify-content-between align-items-center d-flex" style="border-radius: 10px; border: 2px solid red;">
 		<div class="">
-			<h3 class="text-white">
+		</div>
+		<div class="col-6 d-flex">
+			<h3 class="text-white px-5">
 				CATEGORIES
 			</h3>
-		</div>
-		<div class="col-4">
 			<input type="text" class="form-control" placeholder="Checher" oninput="searchcategoy(event)">
 		</div>
 	</div>
@@ -320,15 +345,16 @@
 				</a> -->
 			</div>
 		</div>
+		
 		{% endfor %}
 	</div>
-	<div class="p-2 bg-dark mt-3" style="border-radius: 10px;">
+	<!-- <div class="p-2 bg-dark mt-3" style="border-radius: 10px;">
 		<div class="text-center">
 			<h3 class="text-white">
 				Marques
 			</h3>
 		</div>
-	</div>
+	</div> -->
 	<!-- <div class="categories-list categories-list--layout--columns-4-sidebar px-5">
 		<ul class="categories-list__body">
 			{% for i in categories %}
