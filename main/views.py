@@ -17,6 +17,8 @@ from .models import UserSession
 import telegram
 import asyncio
 import requests as req
+from itertools import islice
+
 TOKEN = '6716455240:AAFgHhoQLrmCU8Elc_A_DQFLrwCJtsHk3P8'
 user_chat_ids = ['USER_CHAT_ID_1', 'USER_CHAT_ID_2', 'USER_CHAT_ID_3']
 group_chat_id = '-4156'
@@ -302,7 +304,6 @@ def searchrefphone(request):
 
 @user_passes_test(tocatalog, login_url='main:loginpage')
 @login_required(login_url='main:loginpage')
-from itertools import islice
 
 def chunked(iterable, size):
     it = iter(iterable)
