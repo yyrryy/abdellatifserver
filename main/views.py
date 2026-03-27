@@ -308,7 +308,7 @@ def clientshome(request):
         has_promotion=Exists(Produit.objects.filter(mark_id=OuterRef('pk'), isoffer=True)),
         total_products=Count('produit')
     )
-    categories = Category.objects.all().order_by('code').annotate(
+    categories = Category.objects.all().order_by('-code').annotate(
         has_promotion=Exists(Produit.objects.filter(mark_id=OuterRef('pk'), isoffer=True)),
         total_products=Count('produit')
     )
