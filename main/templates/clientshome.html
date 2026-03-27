@@ -14,11 +14,13 @@
     width: 100%;
     opacity: 0;
     transition: opacity 1s ease-in-out;
+	display: none;
 }
 
 .product-group.active {
     opacity: 1;
     position: relative;
+	display: block;
 }
 
 </style>
@@ -386,7 +388,7 @@
 			current = (current + 1) % groups.length;
 
 			groups[current].classList.add('active');
-		}, 3000);
+		}, 4500);
 	$(".owl-carousel").owlCarousel({
 		center: true,
             loop:true,
