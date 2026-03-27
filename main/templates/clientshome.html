@@ -4,7 +4,22 @@
 {% block css %}
 <link rel="stylesheet" src="{% static 'css/owl.carousel.min.js'%}">
 <style>
-	
+	.product-wrapper {
+    position: relative;
+    min-height: 300px;
+}
+
+.product-group {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.product-group.active {
+    opacity: 1;
+    position: relative;
+}
 
 </style>
 {% endblock %}
@@ -81,17 +96,23 @@
 		<div class="col-3 p-3 text-center" style="background: red; color: white;">NEW ARRIVAGE</div>
 		<div class="col-3 p-3 text-center" style="background: red; color: white;">NEW ARRIVAGE</div>
 	</div>
-	<div class="row">
-		{% for i in newproducts %}
-		<div class="col-3 p-3 text-center" style="border: 1px solid red;">
-			{% if i.image %}
-			<img src="{{i.image.url}}" style="width: 100%;">
-			{%endif%}
-			<strong>
-				{{i.ref|upper}} {{i.name|upper}}
-			</strong>
+	<div class="product-wrapper position-relative">
+
+		{% for group in grouped_products %}
+		<div class="product-group {% if forloop.first %}active{% endif %}">
+			<div class="row">
+				{% for i in group %}
+				<div class="col-3 p-3 text-center" style="border:1px solid red;">
+					{% if i.image %}
+					<img src="{{i.image.url}}" style="width:100%;">
+					{% endif %}
+					<strong>{{ i.ref|upper }} {{ i.name|upper }}</strong>
+				</div>
+				{% endfor %}
+			</div>
 		</div>
 		{% endfor %}
+	
 	</div>
 	<div class="row">
 		<a href="/newarrivage" class="col-3 border rounded p-3">
@@ -369,7 +390,16 @@
 <script src="{% static 'js/owl.min.js'%}"></script>
 <script>
 	$(document).ready(function(){
-    
+		let groups = document.querySelectorAll('.product-group');
+		let current = 0;
+
+		setInterval(() => {
+			groups[current].classList.remove('active');
+
+			current = (current + 1) % groups.length;
+
+			groups[current].classList.add('active');
+		}, 3000);
 	$(".owl-carousel").owlCarousel({
 		center: true,
             loop:true,

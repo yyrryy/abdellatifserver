@@ -302,23 +302,27 @@ def searchrefphone(request):
 
 @user_passes_test(tocatalog, login_url='main:loginpage')
 @login_required(login_url='main:loginpage')
+from itertools import islice
+
+def chunked(iterable, size):
+    it = iter(iterable)
+    return iter(lambda: list(islice(it, size)), [])
+
 def clientshome(request):
     request.session.set_expiry(90 * 24 * 60 * 60)
-    marks = Mark.objects.annotate(
-        has_promotion=Exists(Produit.objects.filter(mark_id=OuterRef('pk'), isoffer=True)),
-        total_products=Count('produit')
-    )
-    categories = Category.objects.all().order_by('code').annotate(
-        has_promotion=Exists(Produit.objects.filter(mark_id=OuterRef('pk'), isoffer=True)),
-        total_products=Count('produit')
-    )
-    ctx={
-        'categories': categories,
-        'clients':Client.objects.all(),
-        'marques':marks,
-        'promotions':Promotion.objects.order_by('info').exclude(info__startswith='ARRIVAGE').exclude(info=''),
-        'arrivage':Promotion.objects.filter(info__startswith='ARRIVAGE'),
-        'newproducts':Produit.objects.filter(isnew=True).order_by('category')
+
+    newproducts = Produit.objects.filter(isnew=True).order_by('category')
+    grouped_products = list(chunked(newproducts, 4))
+
+    ctx = {
+        'grouped_products': grouped_products,
+        'categories': Category.objects.all().order_by('code'),
+        'clients': Client.objects.all(),
+        'marques': Mark.objects.all(),
+        'promotions': Promotion.objects.order_by('info')
+            .exclude(info__startswith='ARRIVAGE')
+            .exclude(info=''),
+        'arrivage': Promotion.objects.filter(info__startswith='ARRIVAGE'),
     }
     return render(request, 'clientshome.html', ctx)
 
