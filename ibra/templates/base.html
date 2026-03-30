@@ -21,6 +21,14 @@
     <link href="{% static 'css/minified.css'%}" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/datepicker.css">
     <style>
+      @keyframes blink {
+        0%, 100% {opacity: 1;}
+        50% {opacity: 0;}
+      }
+      .blinking-text {
+        animation: blink 1s linear infinite;
+
+      }
       .rise-shake {
         animation: jump-shaking 0.83s infinite;
       }
