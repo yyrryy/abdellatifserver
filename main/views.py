@@ -39,8 +39,7 @@ def product(request, id):
         'simillars':simillars,
         'diamteres':product.diametre.split('*') if product.diametre else ['-','-','-','-','-']
     }
-    if product.cars:
-        ctx['cars']=json.loads(product.cars)
+    
     return render(request, 'product.html', ctx)
 
 @csrf_exempt

@@ -114,7 +114,9 @@
 				{% for i in group %}
 				<div class="col-3 p-3 text-center" style="border:1px solid red;">
 					{% if i.image %}
-					<img src="{{i.image.url}}" style="width:100%;">
+					<a href="/product/{{i.id}}">
+						<img src="{{i.image.url}}" style="width:100%;">
+					</a>
 					{% endif %}
 					<strong>{{ i.ref|upper }} {{ i.name|upper }}</strong>
 				</div>

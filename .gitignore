@@ -1,4 +1,4 @@
-*.sqlite3
 migrations
 __pycache__/
 media_root/
+myvenv
