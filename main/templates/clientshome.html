@@ -407,22 +407,22 @@
 
 <script src="{% static 'js/owl.min.js'%}"></script>
 <script>
-	function searchcategoy(event){
-		const value = event.target.value.toLowerCase();
-		const items = document.querySelectorAll(".owl-carousel .p-2");
+	// function searchcategoy(event){
+	// 	const value = event.target.value.toLowerCase();
+	// 	const items = document.querySelectorAll(".owl-carousel .p-2");
 
-		items.forEach(item => {
-			const name = item.querySelector(".categoryname").textContent.toLowerCase();
+	// 	items.forEach(item => {
+	// 		const name = item.querySelector(".categoryname").textContent.toLowerCase();
 
-			if (name.includes(value)) {
-				item.style.visibility = "visible";
-				item.style.position = "relative";
-			} else {
-				item.style.visibility = "hidden";
-				item.style.position = "absolute";
-			}
-		});
-	}
+	// 		if (name.includes(value)) {
+	// 			item.style.visibility = "visible";
+	// 			item.style.position = "relative";
+	// 		} else {
+	// 			item.style.visibility = "hidden";
+	// 			item.style.position = "absolute";
+	// 		}
+	// 	});
+	// }
 	$(document).ready(function(){
 		let groups = document.querySelectorAll('.product-group');
 		let current = 0;
