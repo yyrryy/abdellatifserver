@@ -914,6 +914,10 @@
             console.log(data)
             $('.commanditems').text(data.length)
         })
+        $.get('/getnumberofnewitems', (data)=>{
+            console.log(data)
+            $('.numberofnewitems').text(data.length)
+        })
         $.get('/getitemsinwishlist', {'userid': "{{request.user.id}}"}, (data)=>{
             console.log(data)
             $('.whishedlist').text(data.length)

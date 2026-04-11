@@ -1354,3 +1354,8 @@ def makecommandnotsent(request):
         'success':True
     })
         
+def getnumberofnewitems(request):
+    newproductslength = len(Produit.objects.filter(isnew=True).order_by('category'))
+    return JsonResponse({
+        "length": newproductslength
+    })
