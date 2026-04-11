@@ -48,12 +48,19 @@
     
     <div class="d-flex align-items-center" style="width:40%">
       <!-- <a href="//replicata" class="btn bi bi-heart" style='font-size:22px;' target="_blank"></a> -->
-      <div class="me-3">
-        <a href="/newarrivage" class="btn bi bi-bell" target="_blank">
-  
+      <div class="indicator">
+        <a href="/newarrivage" class="indicator__button shoppingcard">
+          <span>
+            <i class="bi bi-bell"></i>
+            <span class="indicator__counter numberofnewitems">0</span>
+          </span>
+          <span class="indicator__title">
+              <!--<button class="btn btn-danger">x</button>-->
+          </span>
+
+          <!-- <span class="indicator__value">$250.00</span> -->
         </a>
         
-        <span class="numberofnewitems blink">0</span>
       </div>
       <a href="https://web.whatsapp.com/send/?phone={{user.client.represent.phone}}&text&type=phone_number&app_absent=0" class="bounce bi bi-whatsapp text-success" target="_blank">
       </a>
