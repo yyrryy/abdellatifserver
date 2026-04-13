@@ -4072,7 +4072,6 @@ def getconnectedusers(request):
         'length':length,
         'trs':trs
     })
-    response['Access-Control-Allow-Origin'] = 'http://localserver'
     return response
 
 
