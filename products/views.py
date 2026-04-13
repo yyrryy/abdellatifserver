@@ -4050,16 +4050,15 @@ def getconnectedusers(request):
 
         print("jdfjwfjsdjfwlfjkjfkjwr", i.user.groups.filter(name='clients').exists())
         if i.user.groups.filter(name='clients').exists():
-            client = i.user.client
-            print("cliemt", client)
-            trs+=f"""
-            <tr>
-            <td>{i.user.client.name}</td>
-            <td>client</td>
-            <td>{i.activity}</td>
-            <td>{(i.lasttime).strftime('%Y-%m-%d %H:%M:%S')}</td>
-            </tr>
-            """
+            if i.user.client:
+                trs+=f"""
+                <tr>
+                <td>{i.user.client.name}</td>
+                <td>client</td>
+                <td>{i.activity}</td>
+                <td>{(i.lasttime).strftime('%Y-%m-%d %H:%M:%S')}</td>
+                </tr>
+                """
         else:
              trs+=f"""
             <tr>
