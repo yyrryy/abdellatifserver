@@ -4045,7 +4045,7 @@ def getconnectedusers(request):
     notconnected=Connectedusers.objects.filter(lasttime__lt=five_minutes_ago)
     connected=Connectedusers.objects.filter(lasttime__gt=five_minutes_ago)
     length=connected.count()
-    print("jdfjwfjsdjfwlfjkjfkjwr")
+    print("jdfjwfjsdjfwlfjkjfkjwr", connected)
     trs=''
     for i in connected:
         if i.user.groups.all().first().name=='clients':
