@@ -4045,10 +4045,11 @@ def getconnectedusers(request):
     notconnected=Connectedusers.objects.filter(lasttime__lt=five_minutes_ago)
     connected=Connectedusers.objects.filter(lasttime__gt=five_minutes_ago)
     length=connected.count()
-    print("jdfjwfjsdjfwlfjkjfkjwr", connected)
     trs=''
     for i in connected:
-        if i.user.groups.all().first().name=='clients':
+
+        print("jdfjwfjsdjfwlfjkjfkjwr", i.user.groups)
+        if i.user.groups.filter(name='clients').exists():
             trs+=f"""
             <tr>
             <td>{i.user.client.name}</td>
