@@ -4048,7 +4048,7 @@ def getconnectedusers(request):
     trs=''
     for i in connected:
 
-        print("jdfjwfjsdjfwlfjkjfkjwr", i.user)
+        print("jdfjwfjsdjfwlfjkjfkjwr", i.user.groups)
         if i.user.groups.filter(name='clients').exists():
             trs+=f"""
             <tr>
