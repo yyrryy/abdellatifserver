@@ -1229,7 +1229,8 @@ def switchtocart(request):
 
 @user_passes_test(tocatalog, login_url='main:loginpage')
 def replicata(request):
-    return render(request, 'replicata.html', {'title':'Reliquat'})
+    items = Wishlist.objects.filter(wich__user=request.user.id)
+    return render(request, 'replicata.html', {'title':'Reliquat', "items":items})
 
 def notifications(request):
     notifications=Notification.objects.all()

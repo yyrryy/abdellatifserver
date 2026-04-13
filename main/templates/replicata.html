@@ -9,7 +9,67 @@
     Reliquats
   </strong>
 </div>
-<div class="block">
+<div class="mb-2 d-flex align-items-center border-bottom p-3 cart-item" style="
+    background: aliceblue;
+    border-radius: 2em;
+">
+  <!-- Image -->
+  <div class="me-3">
+    <img
+      src="{%if i.product.image %}{{ i.product.image.url }}{%endif%}"
+      width="200"
+      onclick="displayimage(event, '{%if i.product.image %}{{ i.product.image.url }}{%endif%}')"
+      data-toggle="modal"
+      data-target="#imagedisplaymodal"
+      class="imagedisplaybtn img-fluid"
+      imgsrc="{%if i.product.image %}{{ i.product.image.url }}{%endif%}"
+    >
+  </div>
+
+  <!-- Name -->
+  <div class="flex-grow-1 fw-bold">
+    {{ i.product.ref.upper }} {{ i.product.name.upper }}
+  </div>
+
+  <!-- Price -->
+  <div class="mx-3 text-end">
+    <small class="priceholder" price="{{ i.product.sellprice }}">
+      {{ i.product.sellprice }}
+    </small>
+  </div>
+
+  <!-- Remise -->
+  <div class="mx-3">
+    {{ i.product.remise }}%
+  </div>
+
+  <!-- Quantity -->
+  <div class="mx-3">
+    <input
+      class="form-control form-control-sm"
+      style="width:170px"
+      value="{{ i.qty }}"
+      onchange="updatewishitem(event, {{ i.id }}, {{ i.product.id }}, {{ i.cart.id }})"
+    >
+  </div>
+
+  <!-- Action -->
+  <div class="mx-3">
+    <button
+      class="btn btn-danger btn-sm"
+      onclick="cancelreliquat(event, {{ i.product.id }})"
+    >
+      X
+    </button>
+  </div>
+
+  <!-- Status -->
+  <div class="ms-2">
+    <div class="status {{ i.status }}"></div>
+  </div>
+
+</div>
+<!-- <div class="block">
     <div class="container">
       <div class="cart">
         
@@ -40,11 +100,9 @@
       </div>
       
       <p hidden class="total text-success"></p>
-  <!--<button class="btn btn-primary valider w-100" style="position: fixed; bottom: 0;" disabled>
-        valider le panier
-        </button>-->
+  
     </div>
-</div>
+</div> -->
 {% endblock %}
 
 {% block js %}
@@ -97,44 +155,44 @@
     
 
 
-    $('.loadingcartitems').addClass('d-none')
-      $.get('/getitemsinwishlist', 
-        {
-          'userid': "{{request.user.id}}"
-        }, 
-        (data)=>{
-        for (i of data.items){
-          $('tbody').append(`
+    // $('.loadingcartitems').addClass('d-none')
+    //   $.get('/getitemsinwishlist', 
+    //     {
+    //       'userid': "{{request.user.id}}"
+    //     }, 
+    //     (data)=>{
+    //     for (i of data.items){
+    //       $('tbody').append(`
             
-            <tr>
+    //         <tr>
             
-            <td class="">
-              <img width=100 src="${i.image}" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" imgsrc="${i.image}">
-            </td>
-            <td class="">
-              ${i.ref.toUpperCase()} ${i.name.toUpperCase()}
-            </td>
-            <td class="" data-title="Price">
-            <small class="priceholder" price=${i.sellprice}>${(i.sellprice).toFixed(2)}</small>
-            </td>
-            <td>${i.remise}%</td>
-            <td class=" qtyholder" data-title="Quantity">
-              <input value="${i.qty}" onchange="updatewishitem(event, ${i.wichitemid}, ${i.id}, ${i.wichid})">
+    //         <td class="">
+    //           <img width=100 src="${i.image}" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" imgsrc="${i.image}">
+    //         </td>
+    //         <td class="">
+    //           ${i.ref.toUpperCase()} ${i.name.toUpperCase()}
+    //         </td>
+    //         <td class="" data-title="Price">
+    //         <small class="priceholder" price=${i.sellprice}>${(i.sellprice).toFixed(2)}</small>
+    //         </td>
+    //         <td>${i.remise}%</td>
+    //         <td class=" qtyholder" data-title="Quantity">
+    //           <input value="${i.qty}" onchange="updatewishitem(event, ${i.wichitemid}, ${i.id}, ${i.wichid})">
               
-            </td>
-            <td>
-              <button class="btn btn-danger" onclick="cancelreliquat(event, ${i.id})">
-                X
-              </button>
-            </td>
+    //         </td>
+    //         <td>
+    //           <button class="btn btn-danger" onclick="cancelreliquat(event, ${i.id})">
+    //             X
+    //           </button>
+    //         </td>
             
-            <td><div class="status ${i.status}"></div></td>
-            </tr>
-            `)
-        }
+    //         <td><div class="status ${i.status}"></div></td>
+    //         </tr>
+    //         `)
+    //     }
 
       
-      })
+    //   })
 
     // cart delete item
     
