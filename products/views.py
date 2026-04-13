@@ -4050,6 +4050,8 @@ def getconnectedusers(request):
 
         print("jdfjwfjsdjfwlfjkjfkjwr", i.user.groups.filter(name='clients').exists())
         if i.user.groups.filter(name='clients').exists():
+            client = i.user.client
+            print("cliemt", client)
             trs+=f"""
             <tr>
             <td>{i.user.client.name}</td>
@@ -4067,8 +4069,6 @@ def getconnectedusers(request):
             <td>{(i.lasttime).strftime('%Y-%m-%d %H:%M:%S')}</td>
             </tr>
             """
-    print('connected', connected)
-    print('notconnected', notconnected)
     response= JsonResponse({
         'length':length,
         'trs':trs
