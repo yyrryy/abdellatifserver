@@ -91,25 +91,34 @@ def createcategory(request):
     })
 @csrf_exempt
 def updatecategory(request):
-    
     id=request.POST.get('id')
     hideclient=request.POST.get('hideclient')
     commercialexcluded=request.POST.getlist('commercialexcluded')
-    reps=Represent.objects.filter(pk__in=commercialexcluded)
-    category=Category.objects.get(pk=id)
-    category.masqueclients=hideclient
-    category.excludedrep.clear()
-    category.excludedrep.set(reps)
-    category.name=request.POST.get('name')
-    category.affichage=request.POST.get('affichage')
-    category.code=request.POST.get('code')
-    image=request.FILES.get('image')
-    if image:
-        category.image=image
-    category.save()
-    return JsonResponse({
-        'success':True
-    })
+    clientscodes = json.loads(request.POST.get('clientscodes', '[]'))
+    print("codes>>>>>>>>>>>>>>>", clientscodes)
+    try:
+        clients=Client.objects.filter(code__in=clientscodes)
+        print("codes>>>>>>>>>>>>>>>", clients)
+        reps=Represent.objects.filter(pk__in=commercialexcluded)
+        category=Category.objects.get(pk=id)
+        category.masqueclients=hideclient
+        category.excludedrep.clear()
+        category.excludedclient.clear()
+        category.excludedrep.set(reps)
+        category.excludedclient.set(clients)
+        category.name=request.POST.get('name')
+        category.affichage=request.POST.get('affichage')
+        category.code=request.POST.get('code')
+        image=request.FILES.get('image')
+        if image:
+            category.image=image
+        category.save()
+    except Exception as e:
+        print(e)
+    finally:
+        return JsonResponse({
+            'success':True
+        })
 
 
 @csrf_exempt

@@ -25,7 +25,7 @@ SYNC_TOKEN = '8a7f5b2c9d3e4f1g0h6j'  # random, long, secret
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-DEBUG = False
+
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -98,6 +98,7 @@ WSGI_APPLICATION = 'ibra.wsgi.application'
 usesqlite = os.getenv('DEBUG')=='True' or os.getenv('HOME')=='/home/aaliali'
 print('usesqlite', usesqlite)
 if usesqlite:
+    DEBUG = True
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -105,6 +106,7 @@ if usesqlite:
         }
     }
 else:
+    DEBUG = False
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
