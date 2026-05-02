@@ -56,7 +56,7 @@ def searchrefphone(request):
         q_objects = Q()
 
         q_objects &= (Q(ref__icontains=ref) | Q(coderef__icontains=ref) | Q(name__icontains=ref) | Q(category__name__icontains=ref) |  Q(mark__name__icontains=ref) |  Q(equivalent__icontains=ref)  |  Q(refeq1__icontains=ref) |  Q(refeq2__icontains=ref)  |  Q(block__icontains=ref) | Q(refeq1__icontains=ref) | Q(refeq1__icontains=ref) | Q(sellprice__icontains=ref)  | Q(buyprice__icontains=ref)  | Q(cars__icontains=ref)  | Q(diametre__icontains=ref))
-        products=products | Produit.objects.filter(q_objects).exclude(sellprice=0).order_by('-stocktotal')[:50]
+        products=products | Produit.objects.filter(q_objects).exclude(sellprice=0).order_by('-stocktotal')
         apiproducts=req.get(f'http://167.71.77.64/searcher/searchforibra?ref={ref}')
         oem=''
         if len(products)==0:
@@ -65,7 +65,7 @@ def searchrefphone(request):
             except Exception as e:
                 oem=str(e)
             if oem!="":
-                products=Produit.objects.filter(Q(ref=oem) | Q(equivalent__icontains=oem)).exclude(sellprice=0).order_by('-stocktotal')[:50]
+                products=Produit.objects.filter(Q(ref=oem) | Q(equivalent__icontains=oem)).exclude(sellprice=0).order_by('-stocktotal')
         brands = [product.mark for product in products if product.mark]
         categories = [product.category for product in products if product.category]
 
@@ -81,6 +81,7 @@ def searchrefphone(request):
             else:
                 status="soon"
             if request.user.groups.first().name=='clients':
+                template = 'clientsearchresult.html'
                 a+=f"""
                     <div class="suggestions__item suggestions__product mb-2 productsbrand{i.mark.id if i.mark else ''} productscategorycat{i.category.id if i.category else ''}">
                     <div class="suggestions__product-image image image--type--product">
@@ -128,6 +129,7 @@ def searchrefphone(request):
                     </div>
                 """
             else:
+                template = 'repsearchresult.html'
                 a+=f"""
                     <div class="suggestions__item suggestions__product border mb-2 productsbrand{i.mark.id if i.mark else ''} productscategorycat{i.category.id if i.category else ''}">
                     <div class="suggestions__product-image image image--type--product">
@@ -177,7 +179,8 @@ def searchrefphone(request):
                         
                     </div>
                 """
-        return JsonResponse({'data':a, 'brands':brands, 'categories':categories, 'apiproducts':apiproducts.content.decode('utf-8') if not '+' in ref else None, "oem":oem})
+        return JsonResponse({'data':a, 
+                             'brands':brands, 'categories':categories, 'apiproducts':apiproducts.content.decode('utf-8') if not '+' in ref else None, "oem":oem})
         
     else:
         search_terms = ref.split('+')
