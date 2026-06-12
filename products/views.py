@@ -6806,9 +6806,13 @@ def allowmultiplepc(request):
     clientcode=request.GET.get('clientcode')
     print('..............', clientcode)
     client=Client.objects.get(code=clientcode)
+    print('..............', clientcode)
     user=client.user
+    print('..............', clientcode)
     usersession=Usersession.objects.get(user=user)
+    print('..............', clientcode)
     usersession.delete()
+    print('..............', clientcode)
     return JsonResponse({
         'success':True
     })
