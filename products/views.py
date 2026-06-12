@@ -6802,6 +6802,15 @@ def allowcatalog(request):
     return JsonResponse({
         'success':True
     })
+def allowmultiplepc(request):
+    clientcode=request.GET.get('clientcode')
+    client=Client.objects.get(code=clientcode)
+    user=client.user
+    usersession=Usersession.objects.get(user=user)
+    usersession.delete()
+    return JsonResponse({
+        'success':True
+    })
 def minidashboard(request):
     return render(request, 'minidashboard.html')
 
