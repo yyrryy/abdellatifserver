@@ -6804,6 +6804,7 @@ def allowcatalog(request):
     })
 def allowmultiplepc(request):
     clientcode=request.GET.get('clientcode')
+    print('..............', clientcode)
     client=Client.objects.get(code=clientcode)
     user=client.user
     usersession=Usersession.objects.get(user=user)
