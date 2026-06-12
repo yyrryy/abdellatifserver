@@ -6804,16 +6804,11 @@ def allowcatalog(request):
     })
 def allowmultiplepc(request):
     clientcode=request.GET.get('clientcode')
-    print('..............', clientcode)
     client=Client.objects.get(code=clientcode)
-    print('..............', client)
     user=client.user
-    print('..............', user)
     try:
-        usersession=Usersession.objects.get(user=user)
-        print('..............', usersession)
+        usersession=UserSession.objects.get(user=user)
         usersession.delete()
-        print('.............. usersession deleted')
     except Exception as e:
         print(">>>", e)
     return JsonResponse({
