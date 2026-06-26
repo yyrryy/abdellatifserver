@@ -106,7 +106,7 @@
 <script>
   function updatecartitem(event, cartitemid, productid, cartid){
     $.get('/updatecartitem', {'cartitemid':cartitemid, qty:$(event.target).val(), productid:productid, cartid:cartid}, (data)=>{
-        location.reload()
+        alertify.success('Quantité modifiée avec succès')
     })
   }
   
