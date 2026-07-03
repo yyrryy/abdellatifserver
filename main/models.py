@@ -20,7 +20,8 @@ class Category(models.Model):
     image=models.ImageField(upload_to='categories_images/', null=True, blank=True)
     def __str__(self) -> str:
         return self.name
-    
+    def hasnewproducts(self):
+        return Produit.objects.filter(category=self, isnew=True).exists()
 
 
 
