@@ -1,2 +1,4 @@
-category at4li soflla arzraynt
-repexpert in banda tk7lit
+new in category if a product in that category is new
+jaras ayt7rrak
+not access to catalog redirect to login page and logout the user
+categories in seach need to be vertical
