@@ -87,21 +87,25 @@
     }
 
 @keyframes shake {
-  0%, 100%{
-    transform: translateX(0px);
-    
-  }
-  20%, 80% {
-    transform: translateX(-3px) rotate(-7deg);
+    0%,
+    25%,
+    50%,
+    75%,
+    100%{
+        transform: translateX(0px);
+        
+    }
+    20%, 80% {
+        transform: translateX(-3px) rotate(-7deg);
 
-  }
-  40%, 60% {
-    transform: translateX(3px) rotate(7deg);
-  }
-  50% {
-    transform: translateX(0px);
-    transform: none;
-  }
+    }
+    40%, 60% {
+        transform: translateX(3px) rotate(7deg);
+    }
+    50% {
+        transform: translateX(0px);
+        transform: none;
+    }
 }
 .status {
     position: relative;
