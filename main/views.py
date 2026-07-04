@@ -311,9 +311,9 @@ def searchrefphone(request):
 
 def clientshome(request):
     request.session.set_expiry(90 * 24 * 60 * 60)
-    # client = request.user.client
-    # if not accesscatalog:
-    #     return redirect('main:logoutuser')
+    client = Client.objects.get(user_id=request.user.id)
+    if not accesscatalog:
+        return redirect('main:logoutuser')
     newproducts = Produit.objects.filter(isnew=True).order_by('category')
     grouped_products=[newproducts[i:i+4] for i in range(0, len(newproducts), 4)]
     ctx = {
