@@ -6757,13 +6757,16 @@ def excelnotav(request):
     })
 # this to send carts to local server
 def getcarts(request):
-    carts=Cart.objects.all().order_by('-total').exclude(total=0)
-    data=[]
-    for i in carts:
+carts=Cart.objects.all().order_by('-total').exclude(total=0)
+data=[]
+for i in carts:
+    try:
         if i.user.groups.all().first().name=='clients':
             data.append([i.user.id, i.user.username, i.total, i.user.client.name])
         elif i.user.groups.all().first().name=='salsemen':
             data.append([i.user.id, i.user.username, i.total, i.user.represent.name])
+    except Exception as e:
+        print(">>>", e)
     return JsonResponse({
         'carts':data
     })
