@@ -113,11 +113,13 @@ def updatecategory(request):
         if image:
             category.image=image
         category.save()
-    except Exception as e:
-        print(e)
-    finally:
         return JsonResponse({
             'success':True
+        })
+    except Exception as e:
+        print(e)
+        return JsonResponse({
+            'success':False
         })
 
 

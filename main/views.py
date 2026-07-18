@@ -306,9 +306,6 @@ def searchrefphone(request):
 
 @user_passes_test(tocatalog, login_url='main:loginpage')
 @login_required(login_url='main:loginpage')
-
-
-
 def clientshome(request):
     request.session.set_expiry(90 * 24 * 60 * 60)
     client = Client.objects.get(user_id=request.user.id)

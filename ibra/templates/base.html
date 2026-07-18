@@ -81,20 +81,37 @@
         /*
         shake card
          */
-     /* You may need to adjust the styles based on your specific requirements */
+     /* make it vabrate each 5 seconds */
     .shake {
-        animation: shake 0.5s infinite ease-in-out;
+        animation: bell-shake 3s infinite ease-in-out;
+        transform-origin: top center;
     }
 
-    @keyframes shake {
-        0%   { transform: translateX(0); }
-        10%   { transform: translateX(0); }
-        20%  { transform: translateX(-8px) rotate(3deg); }
-        40%  { transform: translateX(8px) rotate(2deg); }
-        60%  { transform: translateX(-4px) rotate(1deg); }
-        80%  { transform: translateX(4px); }
-        90% { transform: translateX(0); }
-        100% { transform: translateX(0); }
+    @keyframes bell-shake {
+        /* Vibrate for 5 seconds */
+        0%   { transform: rotate(0); }
+        2%   { transform: rotate(-10deg); }
+        4%   { transform: rotate(10deg); }
+        6%   { transform: rotate(-10deg); }
+        8%   { transform: rotate(10deg); }
+        10%  { transform: rotate(-8deg); }
+        12%  { transform: rotate(8deg); }
+        14%  { transform: rotate(-6deg); }
+        16%  { transform: rotate(6deg); }
+        18%  { transform: rotate(-4deg); }
+        20%  { transform: rotate(4deg); }
+
+        /* Continue vibrating with smaller swings */
+        25%  { transform: rotate(-8deg); }
+        30%  { transform: rotate(8deg); }
+        35%  { transform: rotate(-6deg); }
+        40%  { transform: rotate(6deg); }
+        45%  { transform: rotate(-3deg); }
+
+        /* Stop for 5 seconds */
+        50%, 100% {
+            transform: rotate(0);
+        }
     }
 .status {
     position: relative;
