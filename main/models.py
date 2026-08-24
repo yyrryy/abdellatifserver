@@ -679,6 +679,7 @@ class Cartitems(models.Model):
     product=models.ForeignKey(Produit, on_delete=models.CASCADE, default=None)
     qty=models.IntegerField(default=None, null=True, blank=True)
     total=models.FloatField(default=None, null=True, blank=True)
+    date=models.DateTimeField(auto_now_add=True, null=True, blank=True)
     def __str__(self) -> str:
         return f'{self.cart.user} {self.product.ref}'
 

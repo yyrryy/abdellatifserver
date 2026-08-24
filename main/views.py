@@ -661,8 +661,8 @@ def products(request, id):
          'newproducts':newproducts}
     return render(request, 'products.html', ctx)
 
-@user_passes_test(tocatalog, login_url='main:loginpage')
-@login_required(login_url='main:loginpage')
+# @user_passes_test(tocatalog, login_url='main:loginpage')
+# @login_required(login_url='main:loginpage')
 def productscategories(request, id):
     # get the products from the db
     c=Category.objects.get(pk=id)
@@ -1065,7 +1065,8 @@ def getitemsincart(request):
         pass
     response= JsonResponse({
         'length':length,
-        'items':itemscart
+        'items':itemscart,
+        'lastitemdate':Cartitems.objects.filter(cart=cart).order_by('-id').first().date.strftime('%Y-%m-%d %H:%M:%S') if length>0 else ''
     })
     response['Access-Control-Allow-Origin'] = 'http://localserver'
     return response
