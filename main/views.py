@@ -309,8 +309,8 @@ def searchrefphone(request):
 def clientshome(request):
     request.session.set_expiry(90 * 24 * 60 * 60)
     client = Client.objects.get(user_id=request.user.id)
-    # if not client.accesscatalog:
-    #     return redirect('main:logoutuser')
+    if not client.accesscatalog:
+        return redirect('main:logoutuser')
     newproducts = Produit.objects.filter(isnew=True).order_by('category')
     grouped_products=[newproducts[i:i+4] for i in range(0, len(newproducts), 4)]
     ctx = {
@@ -652,6 +652,10 @@ def paied(request, id):
 @login_required(login_url='main:loginpage')
 def products(request, id):
     # get the products from the db
+    if request.user.groups.first().name=='clients':
+        client=Client.objects.get(user_id=request.user.id)
+        if not client.accesscatalog:
+            return redirect('main:logoutuser')
     c=Mark.objects.get(pk=id)
     products=Produit.objects.filter(mark_id=id)
     newproducts=Produit.objects.filter(isnew=True)
@@ -665,6 +669,10 @@ def products(request, id):
 # @login_required(login_url='main:loginpage')
 def productscategories(request, id):
     # get the products from the db
+    if request.user.groups.first().name=='clients':
+        client=Client.objects.get(user_id=request.user.id)
+        if not client.accesscatalog:
+            return redirect('main:logoutuser')
     c=Category.objects.get(pk=id)
     
     products=Produit.objects.filter(category_id=id, isactive=True).order_by('code')
