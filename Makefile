@@ -1,5 +1,5 @@
-run:
-	uv run python manage.py runserver
+run: migrate
+	uv run python manage.py runserver 3000
 
 migrate:
 	uv run python manage.py makemigrations main

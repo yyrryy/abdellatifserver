@@ -6701,6 +6701,7 @@ def excelnotav(request):
 def getcarts(request):
     carts=Cart.objects.all().order_by('-total').exclude(total=0)
     data=[]
+    print("carts", carts)
     for i in carts:
         if i.user.groups.all().first().name=='clients':
             data.append([i.user.id, i.user.username, i.total, i.user.client.name])

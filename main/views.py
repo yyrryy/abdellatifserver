@@ -57,15 +57,17 @@ def searchrefphone(request):
 
         q_objects &= (Q(ref__icontains=ref) | Q(coderef__icontains=ref) | Q(name__icontains=ref) | Q(category__name__icontains=ref) |  Q(mark__name__icontains=ref) |  Q(equivalent__icontains=ref)  |  Q(refeq1__icontains=ref) |  Q(refeq2__icontains=ref)  |  Q(block__icontains=ref) | Q(refeq1__icontains=ref) | Q(refeq1__icontains=ref) | Q(sellprice__icontains=ref)  | Q(buyprice__icontains=ref)  | Q(cars__icontains=ref)  | Q(diametre__icontains=ref))
         products=products | Produit.objects.filter(q_objects).exclude(sellprice=0).order_by('-stocktotal')
-        apiproducts=req.get(f'http://167.71.77.64/searcher/searchforibra?ref={ref}')
-        oem=''
-        if len(products)==0:
-            try:
-                oem=json.loads(req.get(f'http://167.71.77.64/searcher/searchforsupplier?ref={ref}').content.decode('utf-8'))['oem'].strip().lower()
-            except Exception as e:
-                oem=str(e)
-            if oem!="":
-                products=Produit.objects.filter(Q(ref=oem) | Q(equivalent__icontains=oem)).exclude(sellprice=0).order_by('-stocktotal')
+        
+        # apiproducts=req.get(f'http://167.71.77.64/searcher/searchforibra?ref={ref}')
+        # oem=''
+        # if len(products)==0:
+        #     try:
+        #         oem=json.loads(req.get(f'http://167.71.77.64/searcher/searchforsupplier?ref={ref}').content.decode('utf-8'))['oem'].strip().lower()
+        #     except Exception as e:
+        #         oem=str(e)
+        #     if oem!="":
+        #         products=Produit.objects.filter(Q(ref=oem) | Q(equivalent__icontains=oem)).exclude(sellprice=0).order_by('-stocktotal')
+        
         brands = [product.mark for product in products if product.mark]
         categories = [product.category for product in products if product.category]
 
@@ -87,7 +89,8 @@ def searchrefphone(request):
                     <div class="suggestions__product-image image image--type--product">
                         <div class="image__body">
                             <a href='#' terget='_blank'>
-                                <img class="image__tag" src="{i.image.url if i.image else ""}" alt="">
+                                <img class="image__tag" src="{i.image.url if i.image else ""}" alt="" onclick="displayimage(event, '{i.image.url if i.image else ""}')"
+                        imgsrc="{i.image.url if i.image else ""}">
                             </a>
                         </div>
                     </div>
@@ -135,7 +138,8 @@ def searchrefphone(request):
                     <div class="suggestions__product-image image image--type--product">
                         <div class="image__body">
                         <a href='#' terget='_blank'>
-                            <img class="image__tag" src="{i.image.url if i.image else ""}" alt="">
+                            <img class="image__tag" src="{i.image.url if i.image else ""}" alt="" onclick="displayimage(event, '{i.image.url if i.image else ""}')"
+                        imgsrc="{i.image.url if i.image else ""}">
                         </a>
                         </div>
                     
@@ -180,7 +184,9 @@ def searchrefphone(request):
                     </div>
                 """
         return JsonResponse({'data':a, 
-                             'brands':brands, 'categories':categories, 'apiproducts':apiproducts.content.decode('utf-8') if not '+' in ref else None, "oem":oem})
+                             'brands':brands, 'categories':categories, 
+                             })
+                             #'apiproducts':apiproducts.content.decode('utf-8') if not '+' in ref else None, "oem":oem
         
     else:
         search_terms = ref.split('+')
@@ -1049,7 +1055,7 @@ def getitemsincart(request):
         cart=Cart.objects.get(user_id=userid)
         items=Cartitems.objects.filter(cart=cart).order_by('-id')
         length=len(items)
-        print("===>items1111", items)
+        
         for i in items:
             if i.product.stocktotal<=0:
                 status="indisponible"

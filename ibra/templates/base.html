@@ -854,7 +854,7 @@
   </div>
 
   <!-- image display modal -->
-<div class="modal fade" id="imagedisplaymodal" tabindex="-1" aria-labelledby="eimagedisplaymodalLabel" aria-hidden="true">
+<div class="modal fade" id="imagedisplaymodal" tabindex="-1" aria-labelledby="eimagedisplaymodalLabel" aria-hidden="true" style="z-index: 999999;">
     <div class="modal-dialog">
       <div class="modal-content">
   
@@ -881,6 +881,7 @@
     <script>
       
       function displayimage(event, imgsrc){
+        $("#imagedisplaymodal").modal('show')
         $('.imgproductmodal').attr("src", imgsrc)
       }
       function filtersearch(event){
