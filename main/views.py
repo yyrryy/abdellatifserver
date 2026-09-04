@@ -503,34 +503,34 @@ def commande(request):
         totalofdispounible=0
         totalofnotdispounible=0
         for i in cartitems:
-            if i.product.stocktotal>0:
-                totalofdispounible+=round(i.product.sellprice * i.qty, 2)
-                item={
-                    'ref':i.product.ref,
-                    'name':i.product.name,
-                    'qty':i.qty,
-                    'price':i.product.sellprice,
-                    'total':round(i.product.sellprice * i.qty, 2),
-                    'remise':i.product.remise,
-                    'productid':i.product.id,
-                    'uniqcode':i.product.uniqcode
-                }
-                itemsdisponible.append(item)
-                i.delete()
-            else:
-                totalofnotdispounible+=round(i.product.sellprice * i.qty, 2)
-                item={
-                    'ref':i.product.ref,
-                    'name':i.product.name,
-                    'qty':i.qty,
-                    'price':i.product.sellprice,
-                    'total':round(i.product.sellprice * i.qty, 2),
-                    'remise':i.product.remise,
-                    'uniqcode':i.product.uniqcode,
-                    'productid':i.product.id,
-                }
-                itemsnotdisponible.append(item)
-                i.delete()
+            # if i.product.stocktotal>0:
+            totalofdispounible+=round(i.product.sellprice * i.qty, 2)
+            item={
+                'ref':i.product.ref,
+                'name':i.product.name,
+                'qty':i.qty,
+                'price':i.product.sellprice,
+                'total':round(i.product.sellprice * i.qty, 2),
+                'remise':i.product.remise,
+                'productid':i.product.id,
+                'uniqcode':i.product.uniqcode
+            }
+            itemsdisponible.append(item)
+            i.delete()
+            # else:
+            #     totalofnotdispounible+=round(i.product.sellprice * i.qty, 2)
+            #     item={
+            #         'ref':i.product.ref,
+            #         'name':i.product.name,
+            #         'qty':i.qty,
+            #         'price':i.product.sellprice,
+            #         'total':round(i.product.sellprice * i.qty, 2),
+            #         'remise':i.product.remise,
+            #         'uniqcode':i.product.uniqcode,
+            #         'productid':i.product.id,
+            #     }
+            #     itemsnotdisponible.append(item)
+            #     i.delete()
             cart.total=0
             cart.save()
                 
