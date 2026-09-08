@@ -4,6 +4,24 @@
 {% block css %}
 <link rel="stylesheet" src="{% static 'css/owl.carousel.min.js'%}">
 <style>
+	.category-col {
+		width: 19%;
+		border: 1px solid;
+		border-radius: 5px;
+		margin: 5px;
+	}
+
+	@media (max-width: 992px) {
+		.category-col {
+			width: 25%;
+		}
+	}
+
+	@media (max-width: 576px) {
+		.category-col {
+			width: 50%;
+		}
+	}
 	.product-wrapper {
     position: relative;
     min-height: 300px;
@@ -179,24 +197,23 @@
 		<div class="row">
 			{% for i in categories %}
 				{% if not request.user.client in i.excludedclient.all %}
-				<div  class="col-3 p-2 d-flex justify-content-between align-items-center categorycard" >
-					<!-- style="border:1px solid; border-radius: 10px;" -->
+				<div class="category-col p-2 d-flex justify-content-between align-items-center categorycard">
 					<a href="/categories/products/{{i.id}}">
 						{% if i.image %}
-						<img class="image__tag" src="{{i.image.url}}" alt="" style="width: 100%;">
+							<img class="image__tag" src="{{i.image.url}}" alt="" style="width: 100%;">
 						{% else %}
-						<img class="image__tag" src="" alt="">
+							<img class="image__tag" src="" alt="">
 						{% endif %}
+
 						<div class="text-center">
-							<b class="categoryname">
+							<b class="categoryname text-dark">
 								{{i.name.upper}}
-							</b> <br>
+							</b>
+							<br>
 						</div>
-	
 					</a>
-					
 				</div>
-				{%endif%}
+				{% endif %}
 			{% endfor %}
 		</div>
 		<!-- <div class="owl-carousel mt-3">
@@ -223,7 +240,7 @@
 		</div> -->
 	</div>
 	
-	<div class="mt-3 p-2 row border">
+	<!-- <div class="mt-3 p-2 row border">
 
 		
 		<div class="">
@@ -257,7 +274,7 @@
 			</div>
 			
 		</div>
-	</div>
+	</div> -->
 	
 	<!-- <div class="p-2 bg-dark mt-3 justify-content-between align-items-center d-flex" style="border-radius: 10px; border: 2px solid red;">
 		<div class="">

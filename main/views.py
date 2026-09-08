@@ -499,6 +499,7 @@ def commande(request):
     # clientaddress=request.POST.get('clientaddress')
     # clientphone=request.POST.get('clientphone')
     cart=Cart.objects.filter(user=request.user).first()
+    print("cart", cart, cart.total)
     if cart and cart.total > 0:
         cartitems=Cartitems.objects.filter(cart=cart)
         itemsdisponible=[]
@@ -547,7 +548,7 @@ def commande(request):
                         'uniqcode':i.product.uniqcode
                     }
                     itemsdisponible.append(item)
-                    i.delete()
+                    
             
             else:
                 totalofnotdispounible+=round(i.product.sellprice * i.qty, 2)
@@ -562,9 +563,9 @@ def commande(request):
                     'productid':i.product.id,
                 }
                 itemsnotdisponible.append(item)
-                i.delete()
-            cart.total=0
-            cart.save()
+            i.delete()
+        cart.total=0
+        cart.save()
                 
         # if request.user.groups.first().name=='clients' and totalofdispounible == 0:
         #     return JsonResponse({
@@ -1041,11 +1042,11 @@ def addtocart(request):
         # check if product alrady exist
         exist=Cartitems.objects.filter(cart=cart, product=product).first()
         if exist:
-            cart.total=round(cart.total-exist.total+total, 2)
-            cart.save()
-            exist.qty=qty
-            exist.total=total
-            exist.save()
+            # cart.total=round(cart.total-exist.total+total, 2)
+            # cart.save()
+            # exist.qty=qty
+            # exist.total=total
+            # exist.save()
             print('>>>>>>> item already')
             return JsonResponse({
                 'success':False,
@@ -1090,6 +1091,7 @@ def validerclientcart(request):
     userid=request.GET.get('userid')
     client=Client.objects.get(user_id=userid)
     cart=Cart.objects.get(user_id=userid)
+    print("cart", cart, cart.total)
     if cart and cart.total > 0:
         cartitems=Cartitems.objects.filter(cart=cart)
         itemsdisponible=[]
@@ -1138,7 +1140,7 @@ def validerclientcart(request):
                         'uniqcode':i.product.uniqcode
                     }
                     itemsdisponible.append(item)
-                    i.delete()
+                    
             
             else:
                 totalofnotdispounible+=round(i.product.sellprice * i.qty, 2)
@@ -1153,9 +1155,9 @@ def validerclientcart(request):
                     'productid':i.product.id,
                 }
                 itemsnotdisponible.append(item)
-                i.delete()
-            cart.total=0
-            cart.save()
+            i.delete()
+        cart.total=0
+        cart.save()
                 
         # if request.user.groups.first().name=='clients' and totalofdispounible == 0:
         #     return JsonResponse({
@@ -1271,10 +1273,9 @@ def updatecartitem(request):
     cart=Cart.objects.get(pk=cartid)
     product=Produit.objects.get(pk=productid)
     item=Cartitems.objects.get(pk=cartitemid)
-    cart.total=round(float(cart.total)-float(item.total), 2)
-    item.qty=qty
     total=round(float(product.sellprice)*float(qty), 2)
-    cart.total=cart.total+total
+    cart.total=round(float(cart.total)-float(item.total)+total, 2)
+    item.qty=qty
     item.total=total
     item.save()
     cart.save()
