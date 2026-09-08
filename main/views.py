@@ -84,6 +84,9 @@ def searchrefphone(request):
                 status="soon"
             if request.user.groups.first().name=='clients':
                 template = 'clientsearchresult.html'
+                # old command button that has reliquat or commande
+                # <button class="btn btn-success cmnd" pdct="{i.id}" pdctref="{i.ref}" pdctname="{i.name}" pdctpr="{i.sellprice}" pdctid="{i.id}" pdctimg="{ i.image.url if i.image else '' }" pdctremise="{i.remise}" pdctcategory="" onclick="{'whishlist(event)'if i.stocktotal <= 0 else 'cmnd(event)'}">{'Rliquat'if i.stocktotal <= 0 else 'Cmnd'}</button>
+                #             <button class="btn btn-info mt-2 d-none anullercmnd" data-id="{i.id}" onclick="anullercmnd(event, '{i.id}')"> Anuller </button>
                 a+=f"""
                     <div class="suggestions__item suggestions__product mb-2 productsbrand{i.mark.id if i.mark else ''} productscategorycat{i.category.id if i.category else ''}">
                     <div class="suggestions__product-image image image--type--product">
@@ -107,7 +110,7 @@ def searchrefphone(request):
                             <div class="cart-table__quantity input-number">
                                 <input style="height: 2.5em;" class="form-control input-number__input qty" type="number" min="1" value="1">
                             </div>
-                            <button class="btn btn-success cmnd" pdct="{i.id}" pdctref="{i.ref}" pdctname="{i.name}" pdctpr="{i.sellprice}" pdctid="{i.id}" pdctimg="{ i.image.url if i.image else '' }" pdctremise="{i.remise}" pdctcategory="" onclick="{'whishlist(event)'if i.stocktotal <= 0 else 'cmnd(event)'}">{'Rliquat'if i.stocktotal <= 0 else 'Cmnd'}</button>
+                            <button class="btn btn-success cmnd" pdct="{i.id}" pdctref="{i.ref}" pdctname="{i.name}" pdctpr="{i.sellprice}" pdctid="{i.id}" pdctimg="{ i.image.url if i.image else '' }" pdctremise="{i.remise}" pdctcategory="" onclick="cmnd(event)">Cmnd</button>
                             <button class="btn btn-info mt-2 d-none anullercmnd" data-id="{i.id}" onclick="anullercmnd(event, '{i.id}')"> Anuller </button>
                         </div>
                     </div>
@@ -503,34 +506,63 @@ def commande(request):
         totalofdispounible=0
         totalofnotdispounible=0
         for i in cartitems:
-            # if i.product.stocktotal>0:
-            totalofdispounible+=round(i.product.sellprice * i.qty, 2)
-            item={
-                'ref':i.product.ref,
-                'name':i.product.name,
-                'qty':i.qty,
-                'price':i.product.sellprice,
-                'total':round(i.product.sellprice * i.qty, 2),
-                'remise':i.product.remise,
-                'productid':i.product.id,
-                'uniqcode':i.product.uniqcode
-            }
-            itemsdisponible.append(item)
-            i.delete()
-            # else:
-            #     totalofnotdispounible+=round(i.product.sellprice * i.qty, 2)
-            #     item={
-            #         'ref':i.product.ref,
-            #         'name':i.product.name,
-            #         'qty':i.qty,
-            #         'price':i.product.sellprice,
-            #         'total':round(i.product.sellprice * i.qty, 2),
-            #         'remise':i.product.remise,
-            #         'uniqcode':i.product.uniqcode,
-            #         'productid':i.product.id,
-            #     }
-            #     itemsnotdisponible.append(item)
-            #     i.delete()
+            if i.product.stocktotal>0:
+                diff = int(i.qty) - int(i.product.stocktotal)
+                # commande = 10 stock = 6, dispo 6(stock) reliquat diff = 4
+                if diff > 0:
+                    totalofdispounible+=round(i.product.sellprice * i.product.stocktotal, 2)
+                    item={
+                        'ref':i.product.ref,
+                        'name':i.product.name,
+                        'qty':i.product.stocktotal,
+                        'price':i.product.sellprice,
+                        'total':round(i.product.sellprice * i.product.stocktotal, 2),
+                        'remise':i.product.remise,
+                        'productid':i.product.id,
+                        'uniqcode':i.product.uniqcode
+                    }
+                    itemsdisponible.append(item)
+                    totalofnotdispounible+=round(i.product.sellprice * diff, 2)
+                    item={
+                        'ref':i.product.ref,
+                        'name':i.product.name,
+                        'qty':diff,
+                        'price':i.product.sellprice,
+                        'total':round(i.product.sellprice * diff, 2),
+                        'remise':i.product.remise,
+                        'uniqcode':i.product.uniqcode,
+                        'productid':i.product.id,
+                    }
+                    itemsnotdisponible.append(item)
+                else:
+                    totalofdispounible+=round(i.product.sellprice * i.qty, 2)
+                    item={
+                        'ref':i.product.ref,
+                        'name':i.product.name,
+                        'qty':i.qty,
+                        'price':i.product.sellprice,
+                        'total':round(i.product.sellprice * i.qty, 2),
+                        'remise':i.product.remise,
+                        'productid':i.product.id,
+                        'uniqcode':i.product.uniqcode
+                    }
+                    itemsdisponible.append(item)
+                    i.delete()
+            
+            else:
+                totalofnotdispounible+=round(i.product.sellprice * i.qty, 2)
+                item={
+                    'ref':i.product.ref,
+                    'name':i.product.name,
+                    'qty':i.qty,
+                    'price':i.product.sellprice,
+                    'total':round(i.product.sellprice * i.qty, 2),
+                    'remise':i.product.remise,
+                    'uniqcode':i.product.uniqcode,
+                    'productid':i.product.id,
+                }
+                itemsnotdisponible.append(item)
+                i.delete()
             cart.total=0
             cart.save()
                 
@@ -541,20 +573,26 @@ def commande(request):
         #     })
         notesorder=request.POST.get('notesorder')
         cmndfromclient=request.POST.get('cmndfromclient')
+        print(len(itemsdisponible))
+        print(len(itemsnotdisponible))
         if cmndfromclient == 'true':
-            order=Order.objects.create(client=client, salseman=client.represent,  modpymnt='--', modlvrsn='--', total=totalofdispounible, isclientcommnd=True, note=notesorder, senttoserver=False)
-            for i in itemsdisponible:
-                Orderitem.objects.create(order=order, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
+            if len(itemsdisponible)>0:
+                print('Creating order for available items')
+                order=Order.objects.create(client=client, salseman=client.represent,  modpymnt='--', modlvrsn='--', total=totalofdispounible, isclientcommnd=True, note=notesorder, senttoserver=False)
+                for i in itemsdisponible:
+                    Orderitem.objects.create(order=order, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
             if len(itemsnotdisponible)>0:
+                print('Creating order for unavailable items (reliquat)')
                 reliquatorder=Order.objects.create(client=client, salseman=client.represent,  modpymnt='--', modlvrsn='--', total=totalofnotdispounible, isclientcommnd=True, note=notesorder+' Reliquat', senttoserver=False)
                 for i in itemsnotdisponible:
                     Orderitem.objects.create(order=reliquatorder, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
         else:
             print('create order rep')
             rep=Represent.objects.get(user_id=request.user.id).id
-            order=Order.objects.create(client_id=request.POST.get('client'), salseman_id=rep,  modpymnt='--', modlvrsn='--',total=totalofdispounible, note=notesorder, senttoserver=False)
-            for i in itemsdisponible:
-                Orderitem.objects.create(order=order, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
+            if len(itemsdisponible)>0:
+                for i in itemsdisponible:
+                    order=Order.objects.create(client_id=request.POST.get('client'), salseman_id=rep,  modpymnt='--', modlvrsn='--',total=totalofdispounible, note=notesorder, senttoserver=False)
+                    Orderitem.objects.create(order=order, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
             if len(itemsnotdisponible)>0:
                 reliquatorder=Order.objects.create(client_id=request.POST.get('client'), salseman_id=rep,  modpymnt='--', modlvrsn='--',total=totalofnotdispounible, note=notesorder+' Reliquat', senttoserver=False)
                 for i in itemsnotdisponible:
@@ -1045,6 +1083,107 @@ def removecart(request):
     return JsonResponse({
         'success':True
     })
+
+def validerclientcart(request):
+    length=0
+    itemscart=[]
+    userid=request.GET.get('userid')
+    client=Client.objects.get(user_id=userid)
+    cart=Cart.objects.get(user_id=userid)
+    if cart and cart.total > 0:
+        cartitems=Cartitems.objects.filter(cart=cart)
+        itemsdisponible=[]
+        itemsnotdisponible=[]
+        totalofdispounible=0
+        totalofnotdispounible=0
+        for i in cartitems:
+            if i.product.stocktotal>0:
+                diff = int(i.qty) - int(i.product.stocktotal)
+                # commande = 10 stock = 6, dispo 6(stock) reliquat diff = 4
+                if diff > 0:
+                    totalofdispounible+=round(i.product.sellprice * i.product.stocktotal, 2)
+                    item={
+                        'ref':i.product.ref,
+                        'name':i.product.name,
+                        'qty':i.product.stocktotal,
+                        'price':i.product.sellprice,
+                        'total':round(i.product.sellprice * i.product.stocktotal, 2),
+                        'remise':i.product.remise,
+                        'productid':i.product.id,
+                        'uniqcode':i.product.uniqcode
+                    }
+                    itemsdisponible.append(item)
+                    totalofnotdispounible+=round(i.product.sellprice * diff, 2)
+                    item={
+                        'ref':i.product.ref,
+                        'name':i.product.name,
+                        'qty':diff,
+                        'price':i.product.sellprice,
+                        'total':round(i.product.sellprice * diff, 2),
+                        'remise':i.product.remise,
+                        'uniqcode':i.product.uniqcode,
+                        'productid':i.product.id,
+                    }
+                    itemsnotdisponible.append(item)
+                else:
+                    totalofdispounible+=round(i.product.sellprice * i.qty, 2)
+                    item={
+                        'ref':i.product.ref,
+                        'name':i.product.name,
+                        'qty':i.qty,
+                        'price':i.product.sellprice,
+                        'total':round(i.product.sellprice * i.qty, 2),
+                        'remise':i.product.remise,
+                        'productid':i.product.id,
+                        'uniqcode':i.product.uniqcode
+                    }
+                    itemsdisponible.append(item)
+                    i.delete()
+            
+            else:
+                totalofnotdispounible+=round(i.product.sellprice * i.qty, 2)
+                item={
+                    'ref':i.product.ref,
+                    'name':i.product.name,
+                    'qty':i.qty,
+                    'price':i.product.sellprice,
+                    'total':round(i.product.sellprice * i.qty, 2),
+                    'remise':i.product.remise,
+                    'uniqcode':i.product.uniqcode,
+                    'productid':i.product.id,
+                }
+                itemsnotdisponible.append(item)
+                i.delete()
+            cart.total=0
+            cart.save()
+                
+        # if request.user.groups.first().name=='clients' and totalofdispounible == 0:
+        #     return JsonResponse({
+        #         'valid':False,
+        #         'message': 'Stock null panier'
+        #     })
+        if len(itemsdisponible)>0:
+            print('Creating order for available items')
+            order=Order.objects.create(client=client, salseman=client.represent,  modpymnt='--', modlvrsn='--', total=totalofdispounible, isclientcommnd=True, note='valider admin', senttoserver=False)
+            for i in itemsdisponible:
+                Orderitem.objects.create(order=order, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
+        if len(itemsnotdisponible)>0:
+            print('Creating order for unavailable items (reliquat)')
+            reliquatorder=Order.objects.create(client=client, salseman=client.represent,  modpymnt='--', modlvrsn='--', total=totalofnotdispounible, isclientcommnd=True, note='valider admin'+' Reliquat', senttoserver=False)
+            for i in itemsnotdisponible:
+                Orderitem.objects.create(order=reliquatorder, ref=i['ref'], name=i['name'], qty=int(i['qty']), product_id=i['productid'], remise=i['remise'], price=i['price'], total=i['total'])
+        return JsonResponse({
+            'valid':True,
+            'success':True,
+            'message':'Commande enregistrée avec succès',
+        })
+    else:
+        print('no cart')
+        return JsonResponse({
+            'valid':False,
+            'success':False,
+            'message':'Panier vide'
+        })
 
 def getitemsincart(request):
     length=0
