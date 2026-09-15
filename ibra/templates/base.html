@@ -603,7 +603,7 @@
         </div>
         </div>
         
-        <div class="site__body" style="margin-top: 8em;">
+        <div class="site__body" {% if user.groups.all.0.name == 'clients' %}style="margin-top: 8em;"{% endif %}>
             <div>
                 
                 <div class="">

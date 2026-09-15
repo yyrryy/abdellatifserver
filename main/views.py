@@ -1042,11 +1042,11 @@ def addtocart(request):
         # check if product alrady exist
         exist=Cartitems.objects.filter(cart=cart, product=product).first()
         if exist:
-            # cart.total=round(cart.total-exist.total+total, 2)
-            # cart.save()
-            # exist.qty=qty
-            # exist.total=total
-            # exist.save()
+            cart.total=round(cart.total-exist.total+total, 2)
+            cart.save()
+            exist.qty=qty
+            exist.total=total
+            exist.save()
             print('>>>>>>> item already')
             return JsonResponse({
                 'success':False,
