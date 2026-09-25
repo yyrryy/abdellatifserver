@@ -302,7 +302,7 @@ Class name automatically added to element */
 				{% for i in categories %}
 				{% if user.groups.all.0.name == 'clients' %}
 				{% if not i.masqueclients %}
-				<li class="categories-list__item ctgcards">
+				<li class="categories-list__item ctgcards" style="border:1px solid;border-radius: 15px;">
 					<a href="/categories/products/{{i.id}}">
 					  <div class="image image--type--category">
 						<div class="image__body">
@@ -320,7 +320,7 @@ Class name automatically added to element */
 				{% elif user.groups.all.0.name == 'salsemen' %}
 				
 					{% if not request.user.represent in i.excludedrep.all %}
-						<li class="categories-list__item ctgcards">
+						<li class="categories-list__item ctgcards" style="border:1px solid;border-radius: 15px;">
 							<a href="/categories/products/{{i.id}}">
 					  		<div class="image image--type--category">
 								<div class="image__body">
